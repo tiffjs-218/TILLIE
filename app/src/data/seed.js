@@ -42,6 +42,71 @@ export const FEED = [
       detected("v0-5", "p13", 0, "brown suede loafers women"),
     ],
   },
+  // Your own posts (photos from your TikTok). Brands unknown, so these show Tillie's closest real matches.
+  {
+    id: "e1", creator: "@emelie", caption: "denim on denim on hoodie 🧥 #falloutfits",
+    sound: "Where Life Begins", likes: "12", comments: "1", saves: "0", shares: "0",
+    bg: ["#2E2A27", "#4A423B"], image: require("../../assets/feed/emelie_denim.jpg"),
+    outfit: lookOf(piece("p30"), piece("p43"), piece("p07"), piece("p44"), piece("p42")),
+    detected: [
+      detected("e1-1", "p30", 0, "light wash denim trucker jacket women"),
+      detected("e1-2", "p43", 0, "grey half zip hoodie women"),
+      detected("e1-3", "p07", 0, "black wide leg trousers women"),
+      detected("e1-4", "p44", 1, "sand suede mini platform boots"),
+      detected("e1-5", "p42", 0, "silver bow pendant necklace"),
+    ],
+  },
+  {
+    id: "e2", creator: "@emelie", caption: "all white + denim vest 🤍",
+    sound: "Where Life Begins", likes: "12", comments: "1", saves: "0", shares: "0",
+    bg: ["#2E2A27", "#4A423B"], image: require("../../assets/feed/emelie_vest.jpg"),
+    outfit: lookOf(piece("p45"), piece("p46"), piece("p47"), piece("p44", 1)),
+    detected: [
+      detected("e2-1", "p45", 0, "washed denim vest women"),
+      detected("e2-2", "p46", 0, "white oversized cotton tee"),
+      detected("e2-3", "p47", 0, "white wide leg cargo pants women"),
+      detected("e2-4", "p44", 1, "sand suede mini boots"),
+    ],
+  },
+  {
+    id: "e3", creator: "@emelie", caption: "lilac + butter yellow era 💜💛",
+    sound: "Where Life Begins", likes: "12", comments: "1", saves: "0", shares: "0",
+    bg: ["#2E2A27", "#4A423B"], image: require("../../assets/feed/emelie_lilac.jpg"),
+    outfit: lookOf(piece("p48"), piece("p49"), piece("p25", 1), piece("p50"), piece("p40")),
+    detected: [
+      detected("e3-1", "p48", 0, "lilac marled knit cardigan"),
+      detected("e3-2", "p49", 0, "butter yellow babydoll top"),
+      detected("e3-3", "p25", 1, "mid rise straight jeans indigo"),
+      detected("e3-4", "p50", 0, "white thong flip flops"),
+      detected("e3-5", "p40", 0, "brown slouchy shoulder bag"),
+    ],
+  },
+  {
+    id: "e4", creator: "@emelie", caption: "pink stripes for class 🎀",
+    sound: "Where Life Begins", likes: "12", comments: "1", saves: "0", shares: "0",
+    bg: ["#2E2A27", "#4A423B"], image: require("../../assets/feed/emelie_stripe.jpg"),
+    outfit: lookOf(piece("p51"), piece("p25", 1), piece("p50"), piece("p40"), piece("p18")),
+    detected: [
+      detected("e4-1", "p51", 0, "pink striped short sleeve button shirt"),
+      detected("e4-2", "p25", 1, "straight leg jeans indigo"),
+      detected("e4-3", "p40", 0, "brown slouchy suede shoulder bag"),
+      detected("e4-4", "p50", 0, "white flip flops"),
+      detected("e4-5", "p18", 0, "dainty silver chain necklace"),
+    ],
+  },
+  {
+    id: "e5", creator: "@emelie", caption: "satin skirt + ribbon belt 🎀 date night",
+    sound: "Where Life Begins", likes: "12", comments: "1", saves: "0", shares: "0",
+    bg: ["#2E2A27", "#4A423B"], image: require("../../assets/feed/emelie_satin.jpg"),
+    outfit: lookOf(piece("p52"), piece("p53"), piece("p54"), piece("p16"), piece("p55")),
+    detected: [
+      detected("e5-1", "p52", 0, "pale grey lace trim cami"),
+      detected("e5-2", "p53", 0, "sage satin midi slip skirt"),
+      detected("e5-3", "p54", 0, "cream black two tone slingback flats"),
+      detected("e5-4", "p16", 0, "black mini shoulder bag"),
+      detected("e5-5", "p55", 0, "black clover pendant necklace"),
+    ],
+  },
   {
     id: "v1",
     creator: "@maya.styles",
@@ -149,4 +214,25 @@ export const SAMPLE_COMMUNITY = [
     items: lookOf(piece("p21"), piece("p05"), piece("p25", 1), piece("p12", 1)) },
   { id: "c4", creator: "@ari.fits", name: "Date night", likes: 203, layerOrder: DEFAULT_ORDER,
     items: lookOf(piece("p22"), piece("p03"), piece("p07"), piece("p14"), piece("p18", 1)) },
+];
+
+// Past orders for the sample profile (tracking demo)
+const DAY = 86400000;
+export const SAMPLE_ORDERS = [
+  {
+    id: "TL-482913", at: Date.now() - 2 * DAY, dest: "US", total: 96.88, pointsUsed: 0, payment: "Visa •••• 4242",
+    items: [piece("p20", 1), piece("p13")],
+    groups: [
+      { retailer: "Zara", origin: "Spain", arrives: new Date(Date.now() + 4 * DAY).toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" }), count: 1, stage: 2 },
+      { retailer: "Cider", origin: "Hong Kong", arrives: new Date(Date.now() + 6 * DAY).toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" }), count: 1, stage: 1 },
+    ],
+  },
+  {
+    id: "TL-307251", at: Date.now() - 12 * DAY, dest: "US", total: 64.98, pointsUsed: 100, payment: "Apple Pay",
+    items: [piece("p25", 1), piece("p03")],
+    groups: [
+      { retailer: "Uniqlo", origin: "Japan", arrives: new Date(Date.now() - 3 * DAY).toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" }), count: 1, stage: 4 },
+      { retailer: "Edikted", origin: "United States", arrives: new Date(Date.now() - 6 * DAY).toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" }), count: 1, stage: 4 },
+    ],
+  },
 ];

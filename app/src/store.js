@@ -2,17 +2,18 @@
 // Closet, studio, bag, saved outfits, orders, community and profile are saved on the phone.
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { SAMPLE_CLOSET, SAMPLE_COMMUNITY, SAMPLE_SAVED, SAMPLE_PURCHASES } from "./data/seed";
+import { SAMPLE_CLOSET, SAMPLE_COMMUNITY, SAMPLE_SAVED, SAMPLE_PURCHASES, SAMPLE_ORDERS } from "./data/seed";
 import { DEFAULT_ORDER, slotOf } from "./theme";
+import { syncOrder } from "./api";
 
-const KEY = "tillie:v2";
+const KEY = "tillie:v3";
 const AppContext = createContext(null);
 export const useApp = () => useContext(AppContext);
 
 const EMPTY = {
   onboarded: false,
   profile: {
-    name: "", size: "M", styles: [], budget: "50", unit: "in",
+    name: "", size: "M", gender: "Female", genderOther: "", phone: "", budget: "50", unit: "in",
     height: "65", bust: "34", waist: "28", arm: "23", torso: "16",
     street: "", city: "", zip: "", country: "US",
   },
@@ -27,19 +28,22 @@ const EMPTY = {
   community: SAMPLE_COMMUNITY,
   liked: {}, // { postId: 1 | -1 }
   friends: [],
+  recent: [], // items detected in your recent scans (newest first)
   points: 0,
+  redeemed: [], // reward codes you've unlocked
 };
 
 const SAMPLE_PROFILE = {
   ...EMPTY,
   onboarded: true,
-  profile: { ...EMPTY.profile, name: "Emelie", size: "S", styles: ["Minimal", "Casual"], street: "4000 15th Ave NE", city: "Seattle, WA", zip: "98105" },
+  profile: { ...EMPTY.profile, name: "Emelie", size: "S", gender: "Female", phone: "(206) 555-0142", street: "4000 15th Ave NE", city: "Seattle, WA", zip: "98105" },
   closet: SAMPLE_CLOSET,
   outfit: SAMPLE_SAVED[0].items,
   saved: SAMPLE_SAVED,
   purchases: SAMPLE_PURCHASES,
+  orders: SAMPLE_ORDERS,
   friends: ["@maya.styles"],
-  points: 40,
+  points: 240,
 };
 
 export function AppProvider({ children }) {
@@ -73,10 +77,17 @@ export function AppProvider({ children }) {
     setProfile: (patch) => set((s) => ({ profile: { ...s.profile, ...patch } })),
 
     // Closet: everything you wanted from videos
+    // saving to the closet also puts it on your avatar in the Studio, in the right layer
     addToCloset: (piece) => {
-      set((s) => ({ closet: inCloset(s, piece) ? s.closet : [...s.closet, piece] }));
-      notify(`Saved to your closet`);
+      const slot = slotOf(piece);
+      set((s) => ({ closet: inCloset(s, piece) ? s.closet : [...s.closet, piece], outfit: { ...s.outfit, [slot]: piece } }));
+      notify(`Added to closet + studio`);
     },
+    addRecent: (items) =>
+      set((s) => {
+        const ids = new Set(items.map((i) => i.matchId || i.name));
+        return { recent: [...items.map((i) => ({ ...i, seenAt: Date.now() })), ...s.recent.filter((r) => !ids.has(r.matchId || r.name))].slice(0, 12), points: s.points + 5 };
+      }),
     removeFromCloset: (uid) =>
       set((s) => {
         const outfit = { ...s.outfit };
@@ -145,8 +156,9 @@ export function AppProvider({ children }) {
           ...s.purchases,
           ...order.items.map((b) => ({ retailer: b.retailer, size: b.size, category: b.category, productId: b.productId, at: order.at })),
         ],
-        points: s.points + 10,
+        points: s.points - (order.pointsUsed || 0) + Math.round(order.total),
       }));
+      syncOrder(order).then((ok) => ok && notify("Order synced to your Tillie account"));
     },
 
     // Community

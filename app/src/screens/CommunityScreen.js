@@ -31,11 +31,11 @@ export default function CommunityScreen({ onBag, onOpenStudio }) {
           </Pressable>
           <View style={st.points}>
             <View style={{ flex: 1 }}>
-              <Text style={st.pointsNum}>{state.points} creator points</Text>
-              <Text style={st.pointsText}>Earn points by posting outfits from Saved and helping friends decide.</Text>
+              <Text style={st.pointsNum}>{state.points} pts ✦</Text>
+              <Text style={st.pointsText}>Post outfits (+25) and shop (+1 per $1). Spend points as discounts at Zara, Aritzia, Uniqlo and more. See Profile → Rewards.</Text>
             </View>
           </View>
-          <Text style={screen.sample}>Concept feature: points and creator commission are not real earnings.</Text>
+          <Text style={screen.sample}>Prototype: sample rewards. Creator commission is a concept.</Text>
         </View>
       }
       renderItem={({ item: post }) => {
@@ -113,19 +113,19 @@ function FindFriends({ visible, onClose }) {
 
 const st = StyleSheet.create({
   findBtn: { alignSelf: "flex-start", flexDirection: "row", alignItems: "center", gap: 8, borderWidth: 1, borderColor: colors.chipLine, borderRadius: 22, paddingHorizontal: 14, minHeight: 40, backgroundColor: colors.card },
-  findText: { fontSize: 13, fontFamily: fonts.bold, color: colors.ink },
+  findText: { fontSize: 18, fontFamily: fonts.pixel, color: colors.ink },
   findCount: { fontSize: 11, fontFamily: fonts.regular, color: colors.muted },
   person: { flexDirection: "row", alignItems: "center", gap: 12, backgroundColor: colors.card, borderRadius: 16, padding: 10, borderWidth: 1, borderColor: colors.line },
-  avatar: { width: 40, height: 40, borderRadius: 20, backgroundColor: colors.yellow, alignItems: "center", justifyContent: "center" },
-  avatarText: { fontFamily: fonts.serifItalicBold, fontSize: 18, color: colors.ink },
+  avatar: { width: 40, height: 40, borderRadius: 20, backgroundColor: colors.pinkTab, alignItems: "center", justifyContent: "center" },
+  avatarText: { fontFamily: fonts.script, fontSize: 24, color: colors.pink },
   personName: { fontSize: 14, fontFamily: fonts.semibold, color: colors.ink },
   personMeta: { fontSize: 12, fontFamily: fonts.regular, color: colors.muted },
-  points: { backgroundColor: colors.lavender, borderRadius: 18, padding: 14, flexDirection: "row", alignItems: "center", gap: 12 },
-  pointsNum: { fontSize: 18, fontFamily: fonts.bold, color: colors.lavenderInk },
+  points: { backgroundColor: colors.butter, borderWidth: 1.5, borderColor: colors.ink2, borderRadius: 18, padding: 14, flexDirection: "row", alignItems: "center", gap: 12 },
+  pointsNum: { fontSize: 30, fontFamily: fonts.pixel, color: colors.pink },
   pointsText: { fontFamily: fonts.regular, fontSize: 13, color: colors.lavenderInk, marginTop: 2 },
   card: { flex: 1, maxWidth: "50%", backgroundColor: colors.card, borderRadius: 20, padding: 10, gap: 4, borderWidth: 1, borderColor: colors.line },
   thumb: { backgroundColor: colors.lavender, borderRadius: 16, alignItems: "center", paddingVertical: 8 },
-  creator: { fontSize: 12, fontFamily: fonts.bold, color: colors.accent, marginTop: 6 },
+  creator: { fontSize: 15, fontFamily: fonts.pixel, color: colors.pink, marginTop: 6 },
   name: { fontSize: 15, fontFamily: fonts.bold, color: colors.ink },
   meta: { fontFamily: fonts.regular, fontSize: 13, color: colors.muted, fontVariant: ["tabular-nums"] },
   reactions: { flexDirection: "row", gap: 6, marginVertical: 4 },

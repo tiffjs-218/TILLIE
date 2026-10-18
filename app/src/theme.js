@@ -1,40 +1,47 @@
 import { Platform, StatusBar } from "react-native";
 
-// Tillie design system, from the team's Figma Make file ("silver-blue editorial")
+// Tillie design system: "digital wardrobe" Y2K look from the team's Canva template.
+// Pastel lavender/pink gradient, hot pink + steel blue, periwinkle and butter-yellow folder tabs,
+// pixel type + script type, retro computer windows.
 export const colors = {
-  bg: "#F3F4F7", // silver background
+  bg: "#F6F1F8", // pale lavender-pink
+  bg2: "#ECEFFC", // pale periwinkle (gradient end)
   card: "#FFFFFF",
-  ink: "#111318", // near-black text + primary buttons
-  ink2: "#252329",
-  muted: "#687181", // blue-grey secondary text
-  line: "#D9DEE8",
-  chipLine: "#B8C0CD",
-  soft: "#DCE3EF", // soft blue panels
-  soft2: "#CCD5E5",
-  yellow: "#F0D273", // Tillie yellow
-  yellowSoft: "rgba(240, 210, 115, 0.72)", // translucent logo
-  stage: "#E4E7ED", // studio backdrop (grey like the 3D render)
-  stageDark: "#C9CDD5",
+  ink: "#1F4C7A", // steel blue: headings, selected states
+  ink2: "#1E2433", // near-black body text
+  muted: "#6A6F88",
+  line: "#E3DEF0",
+  chipLine: "#BCC6F4",
+  soft: "#DDE3FB", // periwinkle panel
+  soft2: "#BCC6F4", // periwinkle tab
+  pinkTab: "#F9D6F5", // pink folder tab
+  butter: "#F6EFBD", // butter folder tab
+  yellow: "#F3DD7A", // Tillie T orb
+  yellowSoft: "rgba(243, 221, 122, 0.72)",
+  pink: "#DD3FB0", // hot pink
+  pinkSoft: "#FBE3F4",
+  stage: "#DDE3FB",
   mannequin: "#F4F4F2",
   mannequinShade: "#DADBD9",
   skin: "#F4F4F2",
   hair: "#E9E6DF",
-  danger: "#B42318",
+  danger: "#C0264E",
   success: "#1F7A4D",
-  // kept for older components
-  accent: "#111318",
-  accentSoft: "#F6EAC0",
-  lavender: "#DCE3EF",
-  lavenderInk: "#3E4757",
+  accent: "#DD3FB0",
+  accentSoft: "#FBE3F4",
+  lavender: "#DDE3FB",
+  lavenderInk: "#1F4C7A",
 };
 
 export const fonts = {
-  regular: "DMSans_400Regular",
-  medium: "DMSans_500Medium",
-  semibold: "DMSans_600SemiBold",
-  bold: "DMSans_700Bold",
-  serifItalic: "PlayfairDisplay_600SemiBold_Italic",
-  serifItalicBold: "PlayfairDisplay_700Bold_Italic",
+  regular: "Raleway_400Regular",
+  medium: "Raleway_500Medium",
+  semibold: "Raleway_600SemiBold",
+  bold: "Raleway_700Bold",
+  pixel: "VT323_400Regular", // retro pixel type
+  script: "PinyonScript_400Regular", // fancy script type
+  serifItalic: "PinyonScript_400Regular",
+  serifItalicBold: "PinyonScript_400Regular",
 };
 
 // Layer order from outside to inside is set in the Studio. This is the default.

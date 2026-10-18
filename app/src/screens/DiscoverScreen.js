@@ -15,7 +15,7 @@ import { FEED } from "../data/seed";
 import { TOP_INSET, colors, fonts } from "../theme";
 
 export default function DiscoverScreen({ onBag, onOpenCloset }) {
-  const { state } = useApp();
+  const { state, actions } = useApp();
   const [height, setHeight] = useState(0);
   const [index, setIndex] = useState(0);
   const [job, setJob] = useState(null);
@@ -26,7 +26,10 @@ export default function DiscoverScreen({ onBag, onOpenCloset }) {
     const key = `${video.id}-${Date.now()}`;
     setJob({ key, status: "loading", simulated: true });
     setOpen(true);
-    setTimeout(() => setJob({ key, status: "done", simulated: true, items: video.detected }), 1100);
+    setTimeout(() => {
+      setJob({ key, status: "done", simulated: true, items: video.detected });
+      actions.addRecent(video.detected);
+    }, 1100);
   }
 
   async function uploadScreenshot() {
@@ -39,6 +42,7 @@ export default function DiscoverScreen({ onBag, onOpenCloset }) {
     try {
       const res = await detectClothes(asset.base64, asset.mimeType || "image/jpeg");
       setJob({ key, status: "done", imageUri: asset.uri, ...res });
+      if (res.items?.length) actions.addRecent(res.items);
     } catch (err) {
       setJob({ key, status: "error", imageUri: asset.uri, error: err.message });
     }
@@ -181,27 +185,27 @@ const st = StyleSheet.create({
   shadeTop: { position: "absolute", top: 0, left: 0, right: 0, height: 140, backgroundColor: "rgba(0,0,0,0.22)" },
   shadeBottom: { position: "absolute", bottom: 0, left: 0, right: 0, height: 240, backgroundColor: "rgba(0,0,0,0.32)" },
   sampleTag: { position: "absolute", top: TOP_INSET + 52, left: 16, backgroundColor: "rgba(37,35,41,0.6)", borderRadius: 20, paddingHorizontal: 11, paddingVertical: 6 },
-  sampleTagText: { color: "#FFFFFF", fontSize: 11, fontFamily: fonts.semibold },
+  sampleTagText: { color: "#FFFFFF", fontSize: 15, fontFamily: fonts.pixel },
   rail: { position: "absolute", right: 12, bottom: 230, alignItems: "center", gap: 16 },
-  creatorDot: { width: 46, height: 46, borderRadius: 23, backgroundColor: colors.yellow, borderWidth: 2, borderColor: "#FFFFFF", alignItems: "center", justifyContent: "center" },
-  creatorInitial: { color: colors.ink, fontFamily: fonts.serifItalicBold, fontSize: 20 },
+  creatorDot: { width: 46, height: 46, borderRadius: 23, backgroundColor: colors.pinkTab, borderWidth: 2, borderColor: "#FFFFFF", alignItems: "center", justifyContent: "center" },
+  creatorInitial: { color: colors.pink, fontFamily: fonts.script, fontSize: 26 },
   railLabel: { color: "#FFFFFF", fontSize: 12, fontFamily: fonts.semibold },
   captionBox: { position: "absolute", left: 16, right: 84, bottom: 110, gap: 3 },
   creator: { color: "#FFFFFF", fontFamily: fonts.bold, fontSize: 16 },
   caption: { color: "#FFFFFF", fontSize: 14, lineHeight: 19, fontFamily: fonts.regular },
   sound: { color: "rgba(255,255,255,0.85)", fontSize: 13, fontFamily: fonts.regular },
   companion: { position: "absolute", right: 14, flexDirection: "row", alignItems: "center", gap: 10, padding: 4, borderRadius: 32 },
-  companionOpen: { backgroundColor: colors.ink, paddingLeft: 14, shadowColor: "#111318", shadowOpacity: 0.35, shadowRadius: 14, shadowOffset: { width: 0, height: 8 }, elevation: 8 },
-  compTitle: { color: "#FFFFFF", fontFamily: fonts.bold, fontSize: 13 },
-  compSub: { color: "#AEB7C7", fontFamily: fonts.regular, fontSize: 10 },
-  scanBtn: { flexDirection: "row", alignItems: "center", gap: 6, backgroundColor: colors.yellow, borderRadius: 20, paddingHorizontal: 14, minHeight: 40 },
-  scanText: { color: colors.ink, fontFamily: fonts.bold, fontSize: 14 },
+  companionOpen: { backgroundColor: colors.pink, paddingLeft: 14, shadowColor: "#111318", shadowOpacity: 0.35, shadowRadius: 14, shadowOffset: { width: 0, height: 8 }, elevation: 8 },
+  compTitle: { color: "#FFFFFF", fontFamily: fonts.pixel, fontSize: 18 },
+  compSub: { color: "#FBE3F4", fontFamily: fonts.regular, fontSize: 10 },
+  scanBtn: { flexDirection: "row", alignItems: "center", gap: 6, backgroundColor: colors.butter, borderRadius: 20, paddingHorizontal: 14, minHeight: 40 },
+  scanText: { color: colors.ink, fontFamily: fonts.pixel, fontSize: 19 },
   topBar: { position: "absolute", top: TOP_INSET - 6, left: 12, right: 12, flexDirection: "row", alignItems: "center", justifyContent: "space-between" },
   roundBtn: { width: 44, height: 44, borderRadius: 22, backgroundColor: "rgba(37,35,41,0.55)", alignItems: "center", justifyContent: "center" },
   feedTabs: { flexDirection: "row", gap: 18, alignItems: "flex-start" },
-  feedTab: { color: "rgba(255,255,255,0.65)", fontSize: 16, fontFamily: fonts.semibold },
-  feedTabOn: { color: "#FFFFFF", fontFamily: fonts.bold },
-  feedTabLine: { alignSelf: "center", width: 26, height: 3, borderRadius: 2, backgroundColor: colors.yellow, marginTop: 4 },
-  badge: { position: "absolute", top: -3, right: -3, minWidth: 19, height: 19, borderRadius: 10, backgroundColor: colors.yellow, alignItems: "center", justifyContent: "center", paddingHorizontal: 5 },
-  badgeText: { color: colors.ink, fontSize: 10, fontFamily: fonts.bold },
+  feedTab: { color: "rgba(255,255,255,0.7)", fontSize: 21, fontFamily: fonts.pixel },
+  feedTabOn: { color: "#FFFFFF" },
+  feedTabLine: { alignSelf: "center", width: 26, height: 3, borderRadius: 2, backgroundColor: colors.pink, marginTop: 2 },
+  badge: { position: "absolute", top: -3, right: -3, minWidth: 19, height: 19, borderRadius: 10, backgroundColor: colors.pink, alignItems: "center", justifyContent: "center", paddingHorizontal: 5 },
+  badgeText: { color: "#FFFFFF", fontSize: 10, fontFamily: fonts.bold },
 });
