@@ -14,6 +14,7 @@ import { AppProvider, useApp } from "./src/store";
 import WelcomeScreen from "./src/screens/WelcomeScreen";
 import DiscoverScreen from "./src/screens/DiscoverScreen";
 import StudioScreen from "./src/screens/StudioScreen";
+import ClosetScreen from "./src/screens/ClosetScreen";
 import SavedScreen from "./src/screens/SavedScreen";
 import CommunityScreen from "./src/screens/CommunityScreen";
 import ProfileScreen from "./src/screens/ProfileScreen";
@@ -24,6 +25,7 @@ import { colors, fonts } from "./src/theme";
 
 const TABS = [
   { key: "discover", label: "Discover" },
+  { key: "closet", label: "Closet" },
   { key: "studio", label: "Studio" },
   { key: "saved", label: "Saved" },
   { key: "community", label: "Community" },
@@ -54,6 +56,7 @@ function Shell() {
   const nav = {
     onBag: () => setBagOpen(true),
     onOpenStudio: () => setTab("studio"),
+    onOpenCloset: () => setTab("closet"),
     onDiscover: () => setTab("discover"),
   };
   const dark = tab === "discover";
@@ -62,6 +65,7 @@ function Shell() {
     <View style={st.app}>
       <View style={{ flex: 1 }}>
         {tab === "discover" && <DiscoverScreen {...nav} />}
+        {tab === "closet" && <ClosetScreen {...nav} />}
         {tab === "studio" && <StudioScreen {...nav} />}
         {tab === "saved" && <SavedScreen {...nav} />}
         {tab === "community" && <CommunityScreen {...nav} />}
@@ -93,9 +97,9 @@ function Shell() {
 const st = StyleSheet.create({
   app: { flex: 1, backgroundColor: colors.bg },
   navWrap: { position: "absolute", left: 0, right: 0, bottom: 26, alignItems: "center" },
-  nav: { flexDirection: "row", alignItems: "center", gap: 4, padding: 6, borderRadius: 32, backgroundColor: "rgba(255,255,255,0.96)", borderWidth: 1, borderColor: colors.line, shadowColor: "#111318", shadowOpacity: 0.12, shadowRadius: 16, shadowOffset: { width: 0, height: 6 }, elevation: 8 },
+  nav: { flexDirection: "row", alignItems: "center", gap: 2, padding: 5, borderRadius: 32, backgroundColor: "rgba(255,255,255,0.96)", borderWidth: 1, borderColor: colors.line, shadowColor: "#111318", shadowOpacity: 0.12, shadowRadius: 16, shadowOffset: { width: 0, height: 6 }, elevation: 8 },
   navDark: { backgroundColor: "rgba(17,19,24,0.72)", borderColor: "rgba(255,255,255,0.12)" },
-  tab: { minWidth: 48, height: 48, borderRadius: 24, alignItems: "center", justifyContent: "center", flexDirection: "row", gap: 6, paddingHorizontal: 12 },
-  tabOn: { backgroundColor: colors.ink, paddingHorizontal: 16 },
+  tab: { minWidth: 44, height: 46, borderRadius: 23, alignItems: "center", justifyContent: "center", flexDirection: "row", gap: 6, paddingHorizontal: 10 },
+  tabOn: { backgroundColor: colors.ink, paddingHorizontal: 14 },
   tabText: { color: "#FFFFFF", fontSize: 13, fontFamily: fonts.semibold },
 });

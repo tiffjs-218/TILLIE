@@ -10,16 +10,16 @@ Spot an outfit in a video or screenshot. Tillie uses Gemini to find the pieces, 
 
 | Screen | What it does |
 | --- | --- |
-| Welcome | Logo, tagline, start fresh or explore with a sample profile |
-| Discover | Sample vertical video with **Shop this look**, screenshot upload (real Gemini), video link (simulated) |
-| Shop sheet | Checklist of detected pieces → compare similar items with budget, size, color filters and price sort → product details (colors, sizes, add to studio, save item, add to bag, view retailer) |
-| Studio | Layered avatar, left layer strip with ▲▼ layer order (outerwear over/under the top), ‹ › to cycle pieces, lock pieces, **Shuffle outfit**, total price, save, add to bag |
-| Saved | Outfit cards with avatar thumbnail, rename, delete, open in Studio, checkout whole outfit, post to Community |
-| Community | Two-column feed, like/dislike, **Try this look**, creator points (concept) |
-| Bag + Checkout | Checkboxes, quantity, remove, live subtotal → checkout grouped by retailer → sample confirmation |
-| Profile | Name, size, style, budget, address, measurements in cm/in that reshape the avatar |
+| Discover | TikTok-style sample feed. The floating yellow Tillie "T" expands into "Shop this look? · Scan". Camera button = real Gemini detection on your own screenshot |
+| Shop sheet | Pick pieces → compare similar items (budget, size, color, sort) with exact match first → details with a translated "Tillie fit" size |
+| Closet | Every piece you saved, auto-sorted into collections (Summer tops, Cozy knits, Winter coats, Jeans, Boots...) |
+| Studio | Mannequin you can drag to turn 360°. Pieces drop into inner / mid / outer layers automatically. Cycle, lock, shuffle, reorder layers |
+| Saved | Finished outfits only: open in Studio, checkout the whole look, post to Community |
+| Community | Outfit feed, like/dislike, "Try this look", Find friends search, creator points (concept) |
+| Bag + Checkout | Cross-border checkout inside Tillie: ship to 8 countries, per-store origin, prepaid duties, currency handled, one Visa payment, Tillie order confirmation with tracking |
+| Profile | Size, style, budget, height/bust/waist/arm/torso (cm or in), ship-to country, Tillie fit memory (your size at one brand translated to others) |
 
-Bag, saved outfits, studio, community posts and profile are saved on the phone.
+**Size learning:** each brand has a size chart. When you buy a size, Tillie learns your real measurement from it and recommends the matching size at other brands (e.g. XS at Zara → S at Aritzia). Charts are sample data.
 
 ## Responsible AI and trust
 

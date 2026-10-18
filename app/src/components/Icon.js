@@ -7,7 +7,8 @@ export default function Icon({ name, size = 22, color = colors.ink, strokeWidth 
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24">
       {name === "discover" && (<><Rect x="6" y="3" width="12" height="18" rx="3" {...p} /><Path d="M10.5 9.5 L14.5 12 L10.5 14.5 Z" {...p} /></>)}
-      {name === "studio" && (<><Path d="M12 6 a2 2 0 1 1 2 2 c-1 .4-2 1-2 2 L3.5 16 a1.5 1.5 0 0 0 .9 2.7 h15.2 a1.5 1.5 0 0 0 .9-2.7 L12 10" {...p} /></>)}
+      {name === "closet" && (<><Path d="M12 6 a2 2 0 1 1 2 2 c-1 .4-2 1-2 2 L3.5 16 a1.5 1.5 0 0 0 .9 2.7 h15.2 a1.5 1.5 0 0 0 .9-2.7 L12 10" {...p} /></>)}
+      {name === "studio" && (<><Path d="M8.5 4 h7 c0 2 1.5 3 1.5 6 c0 2.5-1.5 4-1.5 6 h-7 c0-2-1.5-3.5-1.5-6 c0-3 1.5-4 1.5-6 z" {...p} /><Path d="M12 16 v4 M9 20 h6" {...p} /></>)}
       {name === "saved" && <Path d="M7 4 h10 a1 1 0 0 1 1 1 v15 l-6-4 l-6 4 V5 a1 1 0 0 1 1-1 z" {...p} />}
       {name === "community" && (<><Circle cx="9" cy="9" r="3" {...p} /><Circle cx="16.5" cy="10" r="2.4" {...p} /><Path d="M3.5 19 c.8-3 3-4.5 5.5-4.5 s4.7 1.5 5.5 4.5 M15 14.6 c2.2-.3 4.4.8 5.3 3.4" {...p} /></>)}
       {name === "profile" && (<><Circle cx="12" cy="8.5" r="3.5" {...p} /><Path d="M5 20 c1-3.6 3.8-5.5 7-5.5 s6 1.9 7 5.5" {...p} /></>)}

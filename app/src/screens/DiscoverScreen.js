@@ -14,7 +14,7 @@ import { useApp } from "../store";
 import { FEED } from "../data/seed";
 import { TOP_INSET, colors, fonts } from "../theme";
 
-export default function DiscoverScreen({ onBag, onOpenStudio }) {
+export default function DiscoverScreen({ onBag, onOpenCloset }) {
   const { state } = useApp();
   const [height, setHeight] = useState(0);
   const [index, setIndex] = useState(0);
@@ -84,7 +84,7 @@ export default function DiscoverScreen({ onBag, onOpenStudio }) {
 
       {height > 0 && <Companion top={height * 0.5} onScan={() => shopVideo(FEED[index] || FEED[0])} />}
 
-      <ShopSheet visible={open} job={job} onClose={() => setOpen(false)} onOpenStudio={onOpenStudio} />
+      <ShopSheet visible={open} job={job} onClose={() => setOpen(false)} onOpenStudio={onOpenCloset} />
     </View>
   );
 }

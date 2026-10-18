@@ -1,26 +1,51 @@
 // Outfit Studio, the main feature.
 // Stage: mannequin with a layer rail on the left (tap a layer to select it) and ‹ › to cycle pieces.
 // Below: the selected piece, a lock switch for shuffling, and layer order controls.
-import { useState } from "react";
-import { Pressable, ScrollView, StyleSheet, Switch, Text, TextInput, View } from "react-native";
+import { useEffect, useRef, useState } from "react";
+import { PanResponder, Pressable, ScrollView, StyleSheet, Switch, Text, TextInput, View } from "react-native";
 import BodySim from "../components/BodySim";
 import GarmentThumb from "../components/GarmentThumb";
 import Icon from "../components/Icon";
 import { Button, Header, Sheet, screen } from "../components/ui";
 import { outfitPieces, outfitTotal, useApp } from "../store";
-import { CATEGORIES, colors, fonts, money } from "../theme";
+import { SLOTS, colors, fonts, money, slotOf } from "../theme";
 
-const labelOf = (key) => CATEGORIES.find((c) => c.key === key);
+const labelOf = (key) => SLOTS.find((c) => c.key === key) || SLOTS[2];
 
 export default function StudioScreen({ onBag, onDiscover }) {
   const { state, actions } = useApp();
   const { closet, outfit, layerOrder, locked, saved } = state;
-  const [selected, setSelected] = useState("top");
+  const [selected, setSelected] = useState("inner");
+  const [angle, setAngle] = useState(0);
+  const angleRef = useRef(0);
+  const startRef = useRef(0);
+  const spinRef = useRef(null);
+  useEffect(() => { angleRef.current = angle; }, [angle]);
+  useEffect(() => () => clearInterval(spinRef.current), []);
+
+  // drag left/right on the stage to turn the mannequin
+  const pan = useRef(
+    PanResponder.create({
+      onMoveShouldSetPanResponder: (_, g) => Math.abs(g.dx) > 8 && Math.abs(g.dx) > Math.abs(g.dy) * 1.5,
+      onPanResponderGrant: () => { clearInterval(spinRef.current); startRef.current = angleRef.current; },
+      onPanResponderMove: (_, g) => setAngle(startRef.current - g.dx * 0.9),
+    })
+  ).current;
+
+  function spin() {
+    clearInterval(spinRef.current);
+    let turned = 0;
+    spinRef.current = setInterval(() => {
+      turned += 8;
+      setAngle((a) => a + 8);
+      if (turned >= 360) clearInterval(spinRef.current);
+    }, 28);
+  }
   const [saveOpen, setSaveOpen] = useState(false);
   const [name, setName] = useState("");
   const bagCount = state.bag.reduce((n, b) => n + b.qty, 0);
 
-  const options = closet.filter((p) => p.category === selected);
+  const options = closet.filter((p) => slotOf(p) === selected);
   const currentIdx = options.findIndex((p) => p.uid === outfit[selected]?.uid);
   const current = outfit[selected];
   const pieces = outfitPieces(outfit);
@@ -60,20 +85,21 @@ export default function StudioScreen({ onBag, onDiscover }) {
   }
 
   const order = layerOrder.indexOf(selected);
+  const facing = Math.cos((angle * Math.PI) / 180);
 
   return (
     <View style={{ flex: 1 }}>
       <ScrollView contentContainerStyle={screen.page}>
         <Header title="Your" emphasis="studio" subtitle={`${pieces.length} pieces · ${money(outfitTotal(outfit))}`} bagCount={bagCount} onBag={onBag} />
 
-        <View style={st.stage}>
+        <View style={st.stage} {...pan.panHandlers}>
           <View style={st.stageBorder} pointerEvents="none" />
-          <Text style={st.handnote}>tap a layer, then swipe through</Text>
+          <Text style={st.handnote}>drag to turn me around</Text>
 
           {/* mannequin */}
           <View style={st.avatarZone}>
             <View style={st.oval} />
-            <BodySim outfit={outfit} layerOrder={layerOrder} profile={state.profile} scale={1.0} />
+            <BodySim outfit={outfit} layerOrder={layerOrder} profile={state.profile} scale={1.0} angle={angle} />
           </View>
 
           {/* layer rail */}
@@ -86,7 +112,7 @@ export default function StudioScreen({ onBag, onDiscover }) {
                 <Pressable key={key} onPress={() => setSelected(key)} style={[st.layer, on && st.layerOn]}
                   accessibilityRole="button" accessibilityState={{ selected: on }} accessibilityLabel={`${cat.label}${piece ? `: ${piece.name}` : ", empty"}`}>
                   {piece ? (
-                    <GarmentThumb category={piece.category} name={piece.name} color={piece.color} size={46} background="transparent" />
+                    <GarmentThumb category={piece.category} name={piece.name} color={piece.color} size={40} background="transparent" />
                   ) : (
                     <View style={st.layerEmpty}><Icon name="plus" size={16} color={colors.muted} /></View>
                   )}
@@ -95,6 +121,19 @@ export default function StudioScreen({ onBag, onDiscover }) {
                 </Pressable>
               );
             })}
+          </View>
+
+          {/* turn controls */}
+          <View style={st.turnRow}>
+            <Pressable onPress={() => setAngle(0)} style={[st.turnBtn, facing > 0.7 && st.turnOn]} accessibilityRole="button" accessibilityLabel="Front view">
+              <Text style={[st.turnText, facing > 0.7 && { color: "#FFFFFF" }]}>Front</Text>
+            </Pressable>
+            <Pressable onPress={spin} style={st.turnBtn} accessibilityRole="button" accessibilityLabel="Spin 360 degrees">
+              <Text style={st.turnText}>360°</Text>
+            </Pressable>
+            <Pressable onPress={() => setAngle(180)} style={[st.turnBtn, facing < -0.7 && st.turnOn]} accessibilityRole="button" accessibilityLabel="Back view">
+              <Text style={[st.turnText, facing < -0.7 && { color: "#FFFFFF" }]}>Back</Text>
+            </Pressable>
           </View>
 
           {/* cycle arrows */}
@@ -161,15 +200,15 @@ export default function StudioScreen({ onBag, onDiscover }) {
 }
 
 const st = StyleSheet.create({
-  stage: { height: 500, borderRadius: 28, backgroundColor: colors.soft, overflow: "hidden", borderWidth: 1, borderColor: "#D2D9E6" },
+  stage: { height: 540, borderRadius: 28, backgroundColor: colors.soft, overflow: "hidden", borderWidth: 1, borderColor: "#D2D9E6" },
   stageBorder: { position: "absolute", top: 10, left: 10, right: 10, bottom: 10, borderWidth: 1, borderStyle: "dashed", borderColor: "#B9C3D4", borderRadius: 22 },
   handnote: { position: "absolute", top: 20, right: 22, color: colors.muted, fontFamily: fonts.serifItalic, fontSize: 12, transform: [{ rotate: "-4deg" }] },
   avatarZone: { position: "absolute", left: 76, right: 0, top: 30, bottom: 10, alignItems: "center", justifyContent: "center" },
   oval: { position: "absolute", bottom: 22, width: 190, height: 30, borderRadius: 95, backgroundColor: colors.soft2 },
-  rail: { position: "absolute", left: 14, top: 24, gap: 8 },
-  layer: { width: 66, height: 82, borderRadius: 14, backgroundColor: "rgba(255,255,255,0.82)", borderWidth: 1, borderColor: "#D2D9E6", alignItems: "center", justifyContent: "center", gap: 2 },
+  rail: { position: "absolute", left: 14, top: 20, gap: 6 },
+  layer: { width: 66, height: 70, borderRadius: 14, backgroundColor: "rgba(255,255,255,0.82)", borderWidth: 1, borderColor: "#D2D9E6", alignItems: "center", justifyContent: "center", gap: 2 },
   layerOn: { borderWidth: 2, borderColor: colors.ink, backgroundColor: "#FFFFFF" },
-  layerEmpty: { width: 46, height: 46, borderRadius: 12, borderWidth: 1.5, borderStyle: "dashed", borderColor: colors.chipLine, alignItems: "center", justifyContent: "center" },
+  layerEmpty: { width: 40, height: 40, borderRadius: 12, borderWidth: 1.5, borderStyle: "dashed", borderColor: colors.chipLine, alignItems: "center", justifyContent: "center" },
   layerLabel: { fontSize: 10, fontFamily: fonts.bold, color: colors.ink, textTransform: "uppercase", letterSpacing: 0.6 },
   lockBadge: { position: "absolute", top: 5, right: 5, width: 18, height: 18, borderRadius: 9, backgroundColor: colors.ink, alignItems: "center", justifyContent: "center" },
   cycle: { position: "absolute", top: "46%", width: 40, height: 40, borderRadius: 20, backgroundColor: "#FFFFFF", alignItems: "center", justifyContent: "center", shadowColor: "#6C5975", shadowOpacity: 0.15, shadowRadius: 8, shadowOffset: { width: 0, height: 4 }, elevation: 3 },
@@ -181,5 +220,9 @@ const st = StyleSheet.create({
   orderRow: { flexDirection: "row", alignItems: "center", gap: 6, flexWrap: "wrap" },
   orderLabel: { fontSize: 13, fontFamily: fonts.bold, color: colors.ink, marginRight: "auto" },
   orderBtn: { borderWidth: 1, borderColor: colors.line, backgroundColor: colors.card, borderRadius: 10, paddingHorizontal: 10, minHeight: 36, justifyContent: "center" },
+  turnRow: { position: "absolute", bottom: 18, left: 94, right: 18, flexDirection: "row", justifyContent: "center", gap: 6 },
+  turnBtn: { paddingHorizontal: 12, minHeight: 34, borderRadius: 17, backgroundColor: "rgba(255,255,255,0.85)", justifyContent: "center", borderWidth: 1, borderColor: "#D2D9E6" },
+  turnOn: { backgroundColor: colors.ink, borderColor: colors.ink },
+  turnText: { fontSize: 12, fontFamily: fonts.semibold, color: colors.ink },
   orderBtnText: { fontSize: 12, fontFamily: fonts.semibold, color: colors.ink },
 });

@@ -1,16 +1,20 @@
 // Community: two-column feed of outfits people built. Like or dislike, "Try this look"
 // loads it into the Studio. Posting your own outfits earns creator points (concept only).
-import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
+import { useState } from "react";
+import { FlatList, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import BodySim from "../components/BodySim";
-import { Button, Header, screen } from "../components/ui";
+import { Button, Header, Sheet, screen } from "../components/ui";
+import Icon from "../components/Icon";
 import { outfitTotal, useApp } from "../store";
 import { colors, money, fonts } from "../theme";
 
 export default function CommunityScreen({ onBag, onOpenStudio }) {
   const { state, actions } = useApp();
   const bagCount = state.bag.reduce((n, b) => n + b.qty, 0);
+  const [findOpen, setFindOpen] = useState(false);
 
   return (
+    <>
     <FlatList
       data={state.community}
       keyExtractor={(p) => p.id}
@@ -20,6 +24,11 @@ export default function CommunityScreen({ onBag, onOpenStudio }) {
       ListHeaderComponent={
         <View style={{ gap: 12 }}>
           <Header title="The" emphasis="community" subtitle="Outfits built by Tillie users" bagCount={bagCount} onBag={onBag} />
+          <Pressable onPress={() => setFindOpen(true)} style={st.findBtn} accessibilityRole="button">
+            <Icon name="community" size={18} />
+            <Text style={st.findText}>Find friends</Text>
+            <Text style={st.findCount}>{state.friends.length} following</Text>
+          </Pressable>
           <View style={st.points}>
             <View style={{ flex: 1 }}>
               <Text style={st.pointsNum}>{state.points} creator points</Text>
@@ -55,10 +64,62 @@ export default function CommunityScreen({ onBag, onOpenStudio }) {
         );
       }}
     />
+    <FindFriends visible={findOpen} onClose={() => setFindOpen(false)} />
+    </>
+  );
+}
+
+// Sample people to search (prototype)
+const PEOPLE = [
+  { handle: "@maya.styles", name: "Maya Chen", note: "12 mutual friends" },
+  { handle: "@jun.wears", name: "Jun Park", note: "UW · 8 mutual friends" },
+  { handle: "@thriftqueen", name: "Priya S.", note: "Thrift + vintage" },
+  { handle: "@ari.fits", name: "Ari Lopez", note: "5 mutual friends" },
+  { handle: "@tiffjs", name: "Tiffany", note: "Your teammate" },
+  { handle: "@dubhacks.fits", name: "DubHacks Style", note: "Hackathon looks" },
+];
+
+function FindFriends({ visible, onClose }) {
+  const { state, actions } = useApp();
+  const [q, setQ] = useState("");
+  const list = PEOPLE.filter((p) => (p.handle + p.name).toLowerCase().includes(q.trim().toLowerCase()));
+  return (
+    <Sheet visible={visible} onClose={onClose} title="Find friends" height="70%">
+      <TextInput value={q} onChangeText={setQ} placeholder="Search by name or @username" placeholderTextColor={colors.muted}
+        style={screen.input} autoCapitalize="none" autoCorrect={false} accessibilityLabel="Search friends" />
+      <FlatList
+        data={list}
+        keyExtractor={(p) => p.handle}
+        contentContainerStyle={{ gap: 8, paddingTop: 12, paddingBottom: 12 }}
+        ListEmptyComponent={<Text style={screen.muted}>No one found. Try another name.</Text>}
+        renderItem={({ item: p }) => {
+          const on = state.friends.includes(p.handle);
+          return (
+            <View style={st.person}>
+              <View style={st.avatar}><Text style={st.avatarText}>{p.name[0]}</Text></View>
+              <View style={{ flex: 1, minWidth: 0 }}>
+                <Text style={st.personName}>{p.name}</Text>
+                <Text style={st.personMeta}>{p.handle} · {p.note}</Text>
+              </View>
+              <Button small title={on ? "Following" : "Follow"} variant={on ? "outline" : "primary"} onPress={() => actions.toggleFriend(p.handle)} />
+            </View>
+          );
+        }}
+      />
+      <Text style={screen.sample}>Sample people for the prototype.</Text>
+    </Sheet>
   );
 }
 
 const st = StyleSheet.create({
+  findBtn: { alignSelf: "flex-start", flexDirection: "row", alignItems: "center", gap: 8, borderWidth: 1, borderColor: colors.chipLine, borderRadius: 22, paddingHorizontal: 14, minHeight: 40, backgroundColor: colors.card },
+  findText: { fontSize: 13, fontFamily: fonts.bold, color: colors.ink },
+  findCount: { fontSize: 11, fontFamily: fonts.regular, color: colors.muted },
+  person: { flexDirection: "row", alignItems: "center", gap: 12, backgroundColor: colors.card, borderRadius: 16, padding: 10, borderWidth: 1, borderColor: colors.line },
+  avatar: { width: 40, height: 40, borderRadius: 20, backgroundColor: colors.yellow, alignItems: "center", justifyContent: "center" },
+  avatarText: { fontFamily: fonts.serifItalicBold, fontSize: 18, color: colors.ink },
+  personName: { fontSize: 14, fontFamily: fonts.semibold, color: colors.ink },
+  personMeta: { fontSize: 12, fontFamily: fonts.regular, color: colors.muted },
   points: { backgroundColor: colors.lavender, borderRadius: 18, padding: 14, flexDirection: "row", alignItems: "center", gap: 12 },
   pointsNum: { fontSize: 18, fontFamily: fonts.bold, color: colors.lavenderInk },
   pointsText: { fontFamily: fonts.regular, fontSize: 13, color: colors.lavenderInk, marginTop: 2 },

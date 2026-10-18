@@ -4,12 +4,14 @@ import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput
 import BodySim from "../components/BodySim";
 import { Button, Header, Pill, screen } from "../components/ui";
 import { useApp } from "../store";
+import { translations } from "../sizing";
+import { COUNTRIES } from "../data/global";
 import { colors, fonts } from "../theme";
 
 const SIZES = ["XS", "S", "M", "L", "XL"];
 const STYLES = ["Casual", "Streetwear", "Minimal", "Y2K", "Preppy", "Vintage", "Athleisure", "Formal"];
 const BUDGETS = [["25", "Under $25"], ["50", "Under $50"], ["100", "Under $100"], ["any", "No limit"]];
-const MEASURES = [["height", "Height"], ["waist", "Waist"], ["arm", "Arm length"], ["torso", "Torso length"]];
+const MEASURES = [["height", "Height"], ["bust", "Bust"], ["waist", "Waist"], ["arm", "Arm length"], ["torso", "Torso length"]];
 
 function Field({ id, label, value, onChange, placeholder, numeric }) {
   return (
@@ -76,6 +78,30 @@ export default function ProfileScreen({ onBag }) {
         </View>
         <Text style={screen.sample}>Measurements personalize the illustrative avatar. They don't guarantee how a garment will fit.</Text>
 
+        <Text style={screen.section}>Tillie fit memory</Text>
+        <Text style={screen.muted}>Every time you check out, Tillie learns your size at that brand and translates it to other brands that cut differently.</Text>
+        {state.purchases.length === 0 ? (
+          <Text style={screen.sample}>Nothing learned yet. Until then, sizes come from your measurements.</Text>
+        ) : (
+          [...state.purchases].reverse().slice(0, 3).map((pu, i) => (
+            <View key={i} style={st.fitCard}>
+              <Text style={st.fitHead}>You wear {pu.size} at {pu.retailer} <Text style={st.fitCat}>· {pu.category === "bottom" ? "bottoms" : "tops"}</Text></Text>
+              <View style={st.wrap}>
+                {translations(pu).slice(0, 6).map((t) => (
+                  <View key={t.brand} style={st.transPill}>
+                    <Text style={st.transText}>{t.brand} <Text style={st.transSize}>{t.size}</Text></Text>
+                  </View>
+                ))}
+              </View>
+            </View>
+          ))
+        )}
+
+        <Text style={screen.section}>Ship to</Text>
+        <View style={st.wrap}>
+          {COUNTRIES.map((c) => <Pill key={c.code} label={c.name} selected={p.country === c.code} onPress={() => actions.setProfile({ country: c.code })} />)}
+        </View>
+
         <Text style={screen.section}>Delivery address</Text>
         <Field id="street" label="Street" value={p.street} onChange={set("street")} placeholder="4000 15th Ave NE" />
         <View style={st.wrap}>
@@ -84,7 +110,13 @@ export default function ProfileScreen({ onBag }) {
         </View>
 
         <Text style={screen.section}>Payment</Text>
-        <Text style={screen.muted}>Each retailer handles payment at checkout. Tillie never collects or stores card details.</Text>
+        <View style={st.cardRow}>
+          <View style={st.visa}><Text style={st.visaText}>VISA</Text></View>
+          <View style={{ flex: 1 }}>
+            <Text style={screen.label}>Visa ending 4242</Text>
+            <Text style={screen.sample}>Demo card · one card pays every store, in any country</Text>
+          </View>
+        </View>
 
         <Button title="Reset demo data" variant="ghost" onPress={actions.resetAll} />
       </ScrollView>
@@ -93,6 +125,15 @@ export default function ProfileScreen({ onBag }) {
 }
 
 const st = StyleSheet.create({
+  fitCard: { backgroundColor: colors.card, borderRadius: 16, padding: 12, gap: 8, borderWidth: 1, borderColor: colors.line },
+  fitHead: { fontSize: 14, fontFamily: fonts.bold, color: colors.ink },
+  fitCat: { fontFamily: fonts.regular, color: colors.muted },
+  transPill: { backgroundColor: colors.soft, borderRadius: 10, paddingHorizontal: 9, paddingVertical: 5 },
+  transText: { fontSize: 12, fontFamily: fonts.regular, color: colors.ink },
+  transSize: { fontFamily: fonts.bold },
+  cardRow: { flexDirection: "row", alignItems: "center", gap: 12, backgroundColor: colors.card, borderRadius: 16, padding: 12, borderWidth: 1, borderColor: colors.line },
+  visa: { width: 52, height: 34, borderRadius: 6, backgroundColor: "#1A1F71", alignItems: "center", justifyContent: "center" },
+  visaText: { color: "#FFFFFF", fontFamily: fonts.bold, fontSize: 13, fontStyle: "italic", letterSpacing: 1 },
   wrap: { flexDirection: "row", flexWrap: "wrap", gap: 8 },
   sectionRow: { flexDirection: "row", alignItems: "center", justifyContent: "space-between" },
   measure: { flexDirection: "row", gap: 12, alignItems: "center" },
