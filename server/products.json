@@ -903,5 +903,298 @@
    "One size"
   ],
   "details": "Freshwater pearl \u00b7 adjustable chain"
+ },
+ {
+  "id": "p43",
+  "name": "Zip-Up Hoodie Sweatshirt",
+  "retailer": "Uniqlo",
+  "price": 39.9,
+  "category": "top",
+  "colors": [
+   "#B9B9B6",
+   "#2A2A2C"
+  ],
+  "colorNames": [
+   "Heather Grey",
+   "Black"
+  ],
+  "sizes": [
+   "XS",
+   "S",
+   "M",
+   "L",
+   "XL"
+  ],
+  "details": "Cotton blend \u00b7 half zip"
+ },
+ {
+  "id": "p44",
+  "name": "Suede Mini Platform Boots",
+  "retailer": "Amazon",
+  "price": 59.99,
+  "category": "shoes",
+  "colors": [
+   "#B49A80",
+   "#D8C7AE"
+  ],
+  "colorNames": [
+   "Chestnut",
+   "Sand"
+  ],
+  "sizes": [
+   "6",
+   "7",
+   "8",
+   "9",
+   "10"
+  ],
+  "details": "Faux shearling lined \u00b7 mini"
+ },
+ {
+  "id": "p45",
+  "name": "Washed Denim Vest",
+  "retailer": "Cider",
+  "price": 29.0,
+  "category": "outerwear",
+  "colors": [
+   "#6F87A3",
+   "#9DB2C8"
+  ],
+  "colorNames": [
+   "Mid Wash",
+   "Light Wash"
+  ],
+  "sizes": [
+   "XS",
+   "S",
+   "M",
+   "L",
+   "XL"
+  ],
+  "details": "Button front \u00b7 cropped"
+ },
+ {
+  "id": "p46",
+  "name": "Oversized Cotton Tee",
+  "retailer": "Uniqlo",
+  "price": 14.9,
+  "category": "top",
+  "colors": [
+   "#F5F4F0",
+   "#BDBDBD"
+  ],
+  "colorNames": [
+   "White",
+   "Grey"
+  ],
+  "sizes": [
+   "XS",
+   "S",
+   "M",
+   "L",
+   "XL"
+  ],
+  "details": "Heavyweight cotton \u00b7 boxy"
+ },
+ {
+  "id": "p47",
+  "name": "White Wide-Leg Cargo Pants",
+  "retailer": "Edikted",
+  "price": 42.0,
+  "category": "bottom",
+  "colors": [
+   "#F1EFE9",
+   "#D9D2C3"
+  ],
+  "colorNames": [
+   "White",
+   "Stone"
+  ],
+  "sizes": [
+   "XS",
+   "S",
+   "M",
+   "L"
+  ],
+  "details": "Drawstring hem \u00b7 low rise"
+ },
+ {
+  "id": "p48",
+  "name": "Marled Knit Cardigan",
+  "retailer": "Cider",
+  "price": 31.0,
+  "category": "top",
+  "colors": [
+   "#B9B3D8",
+   "#B8C7B0"
+  ],
+  "colorNames": [
+   "Lilac",
+   "Sage"
+  ],
+  "sizes": [
+   "XS",
+   "S",
+   "M",
+   "L",
+   "XL"
+  ],
+  "details": "Soft marled knit \u00b7 button up"
+ },
+ {
+  "id": "p49",
+  "name": "Babydoll Tank Top",
+  "retailer": "Princess Polly",
+  "price": 38.0,
+  "category": "top",
+  "colors": [
+   "#F4EDB4",
+   "#F7F5EE"
+  ],
+  "colorNames": [
+   "Butter Yellow",
+   "White"
+  ],
+  "sizes": [
+   "XS",
+   "S",
+   "M",
+   "L",
+   "XL"
+  ],
+  "details": "Square neck \u00b7 flowy"
+ },
+ {
+  "id": "p50",
+  "name": "Thong Flip Flops",
+  "retailer": "H&M",
+  "price": 9.99,
+  "category": "shoes",
+  "colors": [
+   "#F4F2EC",
+   "#1E1E1E"
+  ],
+  "colorNames": [
+   "White",
+   "Black"
+  ],
+  "sizes": [
+   "6",
+   "7",
+   "8",
+   "9",
+   "10"
+  ],
+  "details": "Cushioned footbed"
+ },
+ {
+  "id": "p51",
+  "name": "Striped Short-Sleeve Shirt",
+  "retailer": "Zara",
+  "price": 35.9,
+  "category": "top",
+  "colors": [
+   "#F2C9D2",
+   "#BFD3E6"
+  ],
+  "colorNames": [
+   "Pink Stripe",
+   "Blue Stripe"
+  ],
+  "sizes": [
+   "XS",
+   "S",
+   "M",
+   "L",
+   "XL"
+  ],
+  "details": "Poplin \u00b7 relaxed fit"
+ },
+ {
+  "id": "p52",
+  "name": "Lace Trim Cami Top",
+  "retailer": "Edikted",
+  "price": 22.0,
+  "category": "top",
+  "colors": [
+   "#C9CED8",
+   "#1E1E1E"
+  ],
+  "colorNames": [
+   "Pale Blue Grey",
+   "Black"
+  ],
+  "sizes": [
+   "XS",
+   "S",
+   "M",
+   "L",
+   "XL"
+  ],
+  "details": "Stretch jersey \u00b7 lace neckline"
+ },
+ {
+  "id": "p53",
+  "name": "Satin Midi Slip Skirt",
+  "retailer": "Aritzia",
+  "price": 68.0,
+  "category": "bottom",
+  "colors": [
+   "#C9CCB4",
+   "#E6D6BC"
+  ],
+  "colorNames": [
+   "Sage",
+   "Champagne"
+  ],
+  "sizes": [
+   "XS",
+   "S",
+   "M",
+   "L"
+  ],
+  "details": "Bias cut satin \u00b7 midi"
+ },
+ {
+  "id": "p54",
+  "name": "Two-Tone Slingback Flats",
+  "retailer": "Zara",
+  "price": 49.9,
+  "category": "shoes",
+  "colors": [
+   "#EDE3D1",
+   "#1E1E1E"
+  ],
+  "colorNames": [
+   "Cream / Black",
+   "Black"
+  ],
+  "sizes": [
+   "6",
+   "7",
+   "8",
+   "9",
+   "10"
+  ],
+  "details": "Cap toe \u00b7 slingback strap"
+ },
+ {
+  "id": "p55",
+  "name": "Clover Pendant Necklace",
+  "retailer": "Edikted",
+  "price": 16.0,
+  "category": "accessory",
+  "colors": [
+   "#2B2B2B",
+   "#D4AF37"
+  ],
+  "colorNames": [
+   "Black",
+   "Gold"
+  ],
+  "sizes": [
+   "One size"
+  ],
+  "details": "Enamel clover \u00b7 adjustable chain"
  }
 ]

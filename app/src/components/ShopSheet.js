@@ -3,10 +3,20 @@
 import { useEffect, useMemo, useState } from "react";
 import { ActivityIndicator, FlatList, Image, Linking, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { findSimilar } from "../api";
+import { recommendSize } from "../sizing";
 import { useApp } from "../store";
 import { categoryLabel, colors, makePiece, money, shopUrl, fonts } from "../theme";
 import { Button, Checkbox, Chip, ColorDot, Pill, Sheet, screen } from "./ui";
 import GarmentThumb from "./GarmentThumb";
+import products from "../data/products.json";
+
+// best product for a detected item: its exact match, or the closest color in that category
+function productFor(item) {
+  if (item.matchId) { const m = products.find((p) => p.id === item.matchId); if (m) return m; }
+  const rgb = (h) => [1, 3, 5].map((i) => parseInt(String(h).slice(i, i + 2), 16) || 0);
+  const d = (a, b) => { const x = rgb(a); const y = rgb(b); return Math.hypot(x[0] - y[0], x[1] - y[1], x[2] - y[2]); };
+  return products.filter((p) => p.category === item.category).sort((a, b) => Math.min(...a.colors.map((c) => d(c, item.color))) - Math.min(...b.colors.map((c) => d(c, item.color))))[0];
+}
 
 const BUDGETS = [
   { key: "any", label: "Any price", max: Infinity },
@@ -74,6 +84,16 @@ export default function ShopSheet({ visible, job, onClose, onOpenStudio }) {
 }
 
 function SelectStep({ job, checked, onToggle, onNext }) {
+  const { state, actions } = useApp();
+  const saveAll = () => {
+    (job?.items || []).filter((it) => checked.includes(it.id)).forEach((it) => {
+      const p = productFor(it);
+      if (!p) return;
+      const ci = Math.max(0, p.colors.findIndex((c) => c.toLowerCase() === String(it.color).toLowerCase()));
+      const size = recommendSize(p, state.purchases, state.profile)?.size || p.sizes[0];
+      actions.addToCloset(makePiece(p, ci, size));
+    });
+  };
   if (!job || job.status === "loading") {
     return (
       <View style={st.center}>
@@ -124,7 +144,8 @@ function SelectStep({ job, checked, onToggle, onNext }) {
           );
         }}
       />
-      <Button title={checked.length ? `Compare ${checked.length} piece${checked.length > 1 ? "s" : ""}` : "Select a piece"} disabled={!checked.length} onPress={onNext} />
+      <Button title={checked.length ? `Save ${checked.length} to closet + studio` : "Select a piece"} disabled={!checked.length} onPress={saveAll} />
+      <Button title="Compare prices first" variant="outline" disabled={!checked.length} onPress={onNext} style={{ marginTop: 8 }} />
     </View>
   );
 }
@@ -148,10 +169,11 @@ function CompareStep({ item, isLast, onBack, onOpen, onNext, onDone }) {
   }, [data.items]);
 
   const size = state.profile.size;
+  const fitFor = (p) => recommendSize(p, state.purchases, state.profile)?.size;
   const results = useMemo(() => {
     const max = BUDGETS.find((b) => b.key === budget).max;
     let list = data.items.filter((p) => p.price <= max);
-    if (mySize) list = list.filter((p) => p.sizes.includes(size) || p.sizes.includes("One size"));
+    if (mySize) list = list.filter((p) => p.sizes.includes(fitFor(p) || size) || p.sizes.includes("One size"));
     if (color) list = list.filter((p) => p.colorNames.includes(color));
     if (sort === "match" && item.matchId) list = [...list].sort((a, b) => (b.id === item.matchId) - (a.id === item.matchId));
     if (sort === "low") list = [...list].sort((a, b) => a.price - b.price);
@@ -159,11 +181,13 @@ function CompareStep({ item, isLast, onBack, onOpen, onNext, onDone }) {
     return list;
   }, [data.items, budget, sort, mySize, color, size]);
 
-  const tryIt = (p) => {
+  const pieceFor = (p) => {
     const ci = color ? Math.max(0, p.colorNames.indexOf(color)) : 0;
-    const sz = p.sizes.includes(size) ? size : p.sizes[0];
-    actions.addToStudio(makePiece(p, ci, sz));
+    const rec = fitFor(p);
+    const sz = rec || (p.sizes.includes(size) ? size : p.sizes[0]);
+    return makePiece(p, ci, sz);
   };
+  const saved = (p) => state.closet.some((c) => c.productId === p.id);
 
   return (
     <View style={{ flex: 1 }}>
@@ -177,7 +201,7 @@ function CompareStep({ item, isLast, onBack, onOpen, onNext, onDone }) {
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexGrow: 0 }} contentContainerStyle={st.filters}>
         {BUDGETS.map((b) => <Pill key={b.key} label={b.label} selected={budget === b.key} onPress={() => setBudget(b.key)} />)}
-        <Pill label={`My size (${size})`} selected={mySize} onPress={() => setMySize((v) => !v)} />
+        <Pill label="In my size" selected={mySize} onPress={() => setMySize((v) => !v)} />
         {SORTS.map((o) => <Pill key={o.key} label={o.label} selected={sort === o.key} onPress={() => setSort(o.key)} />)}
       </ScrollView>
       {colorOptions.length > 1 && (
@@ -210,9 +234,14 @@ function CompareStep({ item, isLast, onBack, onOpen, onNext, onDone }) {
                     {p.colors.map((c) => <ColorDot key={c} color={c} size={14} />)}
                   </View>
                 </View>
-                <Text style={st.price}>{money(p.price)}</Text>
+                <View style={{ alignItems: "flex-end", gap: 4 }}>
+                  <Text style={st.price}>{money(p.price)}</Text>
+                  {fitFor(p) ? <Text style={st.fit}>Your size: {fitFor(p)}</Text> : null}
+                </View>
               </View>
-              <Button title="Try in studio" variant="lavender" small onPress={() => tryIt(p)} />
+              <View style={{ flexDirection: "row", gap: 8 }}>
+                <Button title={saved(p) ? "In closet + studio ✓" : "Save to closet"} variant="outline" small style={{ flex: 1 }} disabled={saved(p)} onPress={() => actions.addToCloset(pieceFor(p))} />
+              </View>
             </Pressable>
           )}
           ListFooterComponent={
@@ -227,7 +256,7 @@ function CompareStep({ item, isLast, onBack, onOpen, onNext, onDone }) {
           }
         />
       )}
-      {isLast ? <Button title="Done · open Studio" onPress={onDone} /> : <Button title="Next piece ›" onPress={onNext} />}
+      {isLast ? <Button title="Done · see my closet" onPress={onDone} /> : <Button title="Next piece ›" onPress={onNext} />}
     </View>
   );
 }
@@ -235,8 +264,9 @@ function CompareStep({ item, isLast, onBack, onOpen, onNext, onDone }) {
 function DetailStep({ product: p, onBack }) {
   const { state, actions } = useApp();
   const [ci, setCi] = useState(0);
-  const [size, setSize] = useState(p.sizes.includes(state.profile.size) ? state.profile.size : p.sizes[0]);
-  const fav = state.favorites.includes(p.id);
+  const rec = recommendSize(p, state.purchases, state.profile);
+  const [size, setSize] = useState(rec?.size || (p.sizes.includes(state.profile.size) ? state.profile.size : p.sizes[0]));
+  const inCloset = state.closet.some((c) => c.productId === p.id);
   const piece = makePiece(p, ci, size);
 
   return (
@@ -276,17 +306,21 @@ function DetailStep({ product: p, onBack }) {
 
       <View style={{ gap: 8 }}>
         <Text style={screen.label}>Size</Text>
+        {rec ? (
+          <View style={st.fitBox}>
+            <Text style={st.fitTitle}>Tillie fit: {rec.size} at {p.retailer}</Text>
+            <Text style={st.fitText}>{rec.reason}. {p.retailer} sizes run differently, so Tillie translated it for you.</Text>
+          </View>
+        ) : null}
         <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8 }}>
-          {p.sizes.map((sz) => <Pill key={sz} label={sz} selected={size === sz} onPress={() => setSize(sz)} />)}
+          {p.sizes.map((sz) => <Pill key={sz} label={rec?.size === sz ? `${sz} ✓` : sz} selected={size === sz} onPress={() => setSize(sz)} />)}
         </View>
       </View>
 
-      <Button title="Add to studio" onPress={() => actions.addToStudio(piece)} />
       <View style={{ flexDirection: "row", gap: 10 }}>
-        <Button title={fav ? "Saved ♥" : "Save item"} variant="secondary" style={{ flex: 1 }} onPress={() => actions.toggleFavorite(p.id)} />
-        <Button title="Add to bag" variant="secondary" style={{ flex: 1 }} onPress={() => actions.addToBag([piece])} />
+        <Button title={inCloset ? "In closet ✓" : "Save to closet"} variant="outline" style={{ flex: 1 }} disabled={inCloset} onPress={() => actions.addToCloset(piece)} />
+        <Button title="Add to bag" variant="outline" style={{ flex: 1 }} onPress={() => actions.addToBag([piece])} />
       </View>
-      <Button title={`View on ${p.retailer}`} variant="ghost" onPress={() => Linking.openURL(shopUrl(p))} />
     </ScrollView>
   );
 }
@@ -314,6 +348,10 @@ const st = StyleSheet.create({
   gallery: { flexDirection: "row", alignItems: "center", gap: 8 },
   galleryImage: { flex: 1, alignItems: "center", justifyContent: "center", gap: 8 },
   details: { color: colors.muted, fontFamily: fonts.regular, fontSize: 12 },
+  fit: { fontSize: 11, fontFamily: fonts.bold, color: colors.ink, backgroundColor: colors.yellow, paddingHorizontal: 7, paddingVertical: 2, borderRadius: 8, overflow: "hidden" },
+  fitBox: { backgroundColor: colors.soft, borderRadius: 14, padding: 12, gap: 3 },
+  fitTitle: { fontSize: 14, fontFamily: fonts.bold, color: colors.ink },
+  fitText: { fontSize: 12, fontFamily: fonts.regular, color: colors.muted, lineHeight: 17 },
   galleryCaption: { backgroundColor: "rgba(255,255,255,0.9)", color: colors.ink, fontFamily: fonts.bold, fontSize: 13, paddingHorizontal: 10, paddingVertical: 4, borderRadius: 999, overflow: "hidden" },
   arrow: { width: 36, height: 44, alignItems: "center", justifyContent: "center" },
   arrowText: { fontFamily: fonts.regular, fontSize: 32, color: colors.ink },

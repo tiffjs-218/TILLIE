@@ -4,16 +4,18 @@ import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
-import { DMSans_400Regular } from "@expo-google-fonts/dm-sans/400Regular";
-import { DMSans_500Medium } from "@expo-google-fonts/dm-sans/500Medium";
-import { DMSans_600SemiBold } from "@expo-google-fonts/dm-sans/600SemiBold";
-import { DMSans_700Bold } from "@expo-google-fonts/dm-sans/700Bold";
-import { PlayfairDisplay_600SemiBold_Italic } from "@expo-google-fonts/playfair-display/600SemiBold_Italic";
-import { PlayfairDisplay_700Bold_Italic } from "@expo-google-fonts/playfair-display/700Bold_Italic";
+import { Raleway_400Regular } from "@expo-google-fonts/raleway/400Regular";
+import { Raleway_500Medium } from "@expo-google-fonts/raleway/500Medium";
+import { Raleway_600SemiBold } from "@expo-google-fonts/raleway/600SemiBold";
+import { Raleway_700Bold } from "@expo-google-fonts/raleway/700Bold";
+import { VT323_400Regular } from "@expo-google-fonts/vt323/400Regular";
+import { PinyonScript_400Regular } from "@expo-google-fonts/pinyon-script/400Regular";
+import Svg, { Circle, Defs, LinearGradient, Rect, Stop } from "react-native-svg";
 import { AppProvider, useApp } from "./src/store";
 import WelcomeScreen from "./src/screens/WelcomeScreen";
 import DiscoverScreen from "./src/screens/DiscoverScreen";
 import StudioScreen from "./src/screens/StudioScreen";
+import ClosetScreen from "./src/screens/ClosetScreen";
 import SavedScreen from "./src/screens/SavedScreen";
 import CommunityScreen from "./src/screens/CommunityScreen";
 import ProfileScreen from "./src/screens/ProfileScreen";
@@ -24,6 +26,7 @@ import { colors, fonts } from "./src/theme";
 
 const TABS = [
   { key: "discover", label: "Discover" },
+  { key: "closet", label: "Closet" },
   { key: "studio", label: "Studio" },
   { key: "saved", label: "Saved" },
   { key: "community", label: "Community" },
@@ -32,8 +35,8 @@ const TABS = [
 
 export default function App() {
   const [loaded, error] = useFonts({
-    DMSans_400Regular, DMSans_500Medium, DMSans_600SemiBold, DMSans_700Bold,
-    PlayfairDisplay_600SemiBold_Italic, PlayfairDisplay_700Bold_Italic,
+    Raleway_400Regular, Raleway_500Medium, Raleway_600SemiBold, Raleway_700Bold,
+    VT323_400Regular, PinyonScript_400Regular,
   });
   if (!loaded && !error) return <View style={{ flex: 1, backgroundColor: colors.bg }} />;
   return (
@@ -48,20 +51,25 @@ function Shell() {
   const { state, toast } = useApp();
   const [tab, setTab] = useState("discover");
   const [bagOpen, setBagOpen] = useState(false);
+  const [bagTab, setBagTab] = useState("bag");
 
   if (!state.onboarded) return <WelcomeScreen />;
 
   const nav = {
-    onBag: () => setBagOpen(true),
+    onBag: () => { setBagTab("bag"); setBagOpen(true); },
+    onOrders: () => { setBagTab("orders"); setBagOpen(true); },
     onOpenStudio: () => setTab("studio"),
+    onOpenCloset: () => setTab("closet"),
     onDiscover: () => setTab("discover"),
   };
   const dark = tab === "discover";
 
   return (
     <View style={st.app}>
+      <Backdrop />
       <View style={{ flex: 1 }}>
         {tab === "discover" && <DiscoverScreen {...nav} />}
+        {tab === "closet" && <ClosetScreen {...nav} />}
         {tab === "studio" && <StudioScreen {...nav} />}
         {tab === "saved" && <SavedScreen {...nav} />}
         {tab === "community" && <CommunityScreen {...nav} />}
@@ -84,18 +92,43 @@ function Shell() {
         </View>
       </View>
 
-      <BagSheet visible={bagOpen} onClose={() => setBagOpen(false)} />
+      <BagSheet visible={bagOpen} initialTab={bagTab} onClose={() => setBagOpen(false)} />
       {!bagOpen && <Toast message={toast} />}
     </View>
+  );
+}
+
+// Soft pink → periwinkle gradient with halftone dots in the corners (from the Canva template)
+function Backdrop() {
+  const dots = [];
+  for (let r = 0; r < 9; r++) {
+    for (let c = 0; c < 9; c++) {
+      const d = Math.hypot(r, c);
+      if (d < 9) dots.push({ x: 400 - c * 14, y: r * 14, r: Math.max(0.6, 5 - d * 0.55) });
+    }
+  }
+  return (
+    <Svg style={StyleSheet.absoluteFill} viewBox="0 0 400 860" preserveAspectRatio="xMidYMid slice" pointerEvents="none">
+      <Defs>
+        <LinearGradient id="bgg" x1="0" y1="0" x2="1" y2="1">
+          <Stop offset="0" stopColor="#FCEFF3" />
+          <Stop offset="0.5" stopColor={colors.bg} />
+          <Stop offset="1" stopColor={colors.bg2} />
+        </LinearGradient>
+      </Defs>
+      <Rect x="0" y="0" width="400" height="860" fill="url(#bgg)" />
+      {dots.map((d, i) => <Circle key={i} cx={d.x} cy={d.y} r={d.r} fill={colors.soft2} opacity={0.7} />)}
+      {dots.map((d, i) => <Circle key={`b${i}`} cx={400 - d.x} cy={860 - d.y} r={d.r} fill={colors.soft2} opacity={0.55} />)}
+    </Svg>
   );
 }
 
 const st = StyleSheet.create({
   app: { flex: 1, backgroundColor: colors.bg },
   navWrap: { position: "absolute", left: 0, right: 0, bottom: 26, alignItems: "center" },
-  nav: { flexDirection: "row", alignItems: "center", gap: 4, padding: 6, borderRadius: 32, backgroundColor: "rgba(255,255,255,0.96)", borderWidth: 1, borderColor: colors.line, shadowColor: "#111318", shadowOpacity: 0.12, shadowRadius: 16, shadowOffset: { width: 0, height: 6 }, elevation: 8 },
+  nav: { flexDirection: "row", alignItems: "center", gap: 2, padding: 5, borderRadius: 32, backgroundColor: "rgba(255,255,255,0.96)", borderWidth: 1, borderColor: colors.line, shadowColor: "#111318", shadowOpacity: 0.12, shadowRadius: 16, shadowOffset: { width: 0, height: 6 }, elevation: 8 },
   navDark: { backgroundColor: "rgba(17,19,24,0.72)", borderColor: "rgba(255,255,255,0.12)" },
-  tab: { minWidth: 48, height: 48, borderRadius: 24, alignItems: "center", justifyContent: "center", flexDirection: "row", gap: 6, paddingHorizontal: 12 },
-  tabOn: { backgroundColor: colors.ink, paddingHorizontal: 16 },
-  tabText: { color: "#FFFFFF", fontSize: 13, fontFamily: fonts.semibold },
+  tab: { minWidth: 44, height: 46, borderRadius: 23, alignItems: "center", justifyContent: "center", flexDirection: "row", gap: 6, paddingHorizontal: 10 },
+  tabOn: { backgroundColor: colors.pink, paddingHorizontal: 14 },
+  tabText: { color: "#FFFFFF", fontSize: 17, fontFamily: fonts.pixel },
 });

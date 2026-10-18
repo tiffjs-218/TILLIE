@@ -68,3 +68,39 @@ export async function findSimilar(item) {
     };
   }
 }
+
+// Save an order to the cloud (MongoDB Atlas via the server). Never blocks checkout:
+// if the server is offline, the order is still saved on the phone.
+export async function syncOrder(order) {
+  try {
+    const res = await fetchWithTimeout(
+      `${SERVER_URL}/orders`,
+      { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ userId: "demo-user", order }) },
+      8000
+    );
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
+
+// "See it on me": send your photo + the Studio outfit to Gemini's image model.
+// Returns { uri } (a data URI you can put in <Image>). Throws a friendly error on failure.
+export async function tryOnOutfit(photoBase64, mimeType, pieces) {
+  const items = pieces.map((p) => ({
+    name: p.name, colorName: p.colorName, retailer: p.retailer, category: p.category, layer: p.layer,
+  }));
+  let res;
+  try {
+    res = await fetchWithTimeout(
+      `${SERVER_URL}/tryon`,
+      { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ photo: photoBase64, mimeType, items }) },
+      120000
+    );
+  } catch (err) {
+    throw new Error("Couldn't reach the Tillie server. Check SERVER_URL in config.js and that the server is running.");
+  }
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok || !data.image) throw new Error(data.error || `Server error ${res.status}`);
+  return { uri: `data:${data.mimeType || "image/png"};base64,${data.image}` };
+}

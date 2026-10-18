@@ -6,7 +6,6 @@ import BodySim from "../components/BodySim";
 import { Button, Header, Sheet, screen } from "../components/ui";
 import GarmentThumb from "../components/GarmentThumb";
 import { outfitPieces, outfitTotal, useApp } from "../store";
-import products from "../data/products.json";
 import { categoryLabel, colors, money, fonts } from "../theme";
 
 export default function SavedScreen({ onBag, onOpenStudio }) {
@@ -17,7 +16,6 @@ export default function SavedScreen({ onBag, onOpenStudio }) {
   const [confirmDelete, setConfirmDelete] = useState(false);
   const open = state.saved.find((o) => o.id === openId);
   const bagCount = state.bag.reduce((n, b) => n + b.qty, 0);
-  const favorites = products.filter((p) => state.favorites.includes(p.id));
   const published = (id) => state.community.some((c) => c.mine && c.sourceId === id);
 
   const close = () => {
@@ -37,21 +35,7 @@ export default function SavedScreen({ onBag, onOpenStudio }) {
         ListHeaderComponent={
           <View style={{ gap: 16 }}>
             <Header title="Saved" emphasis="looks" subtitle={`${state.saved.length} outfits`} bagCount={bagCount} onBag={onBag} />
-            {favorites.length > 0 && (
-              <View style={{ gap: 8 }}>
-                <Text style={screen.section}>Saved items</Text>
-                <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 10 }}>
-                  {favorites.map((p) => (
-                    <View key={p.id} style={st.fav}>
-                      <GarmentThumb category={p.category} name={p.name} color={p.colors[0]} size={60} />
-                      <Text style={st.favName} numberOfLines={2}>{p.name}</Text>
-                      <Text style={screen.muted}>{money(p.price)}</Text>
-                    </View>
-                  ))}
-                </ScrollView>
-              </View>
-            )}
-            <Text style={screen.section}>Outfits</Text>
+            <Text style={screen.muted}>Only finished outfits live here. Build one in the Studio and tap Save outfit. Single pieces go to your Closet.</Text>
           </View>
         }
         ListEmptyComponent={<Text style={screen.muted}>No outfits yet. Build one in the Studio and tap Save outfit.</Text>}
@@ -94,7 +78,7 @@ export default function SavedScreen({ onBag, onOpenStudio }) {
             <Button title={`Checkout whole outfit · ${money(outfitTotal(open.items))}`} onPress={() => { actions.addToBag(outfitPieces(open.items)); close(); setTimeout(onBag, 450); }} />
             <Button title="Open in Studio" variant="lavender" onPress={() => { actions.loadOutfit(open); close(); onOpenStudio(); }} />
             <Button
-              title={published(open.id) ? "Posted to Community" : "Post to Community · +25 pts"}
+              title={published(open.id) ? "Posted to Community" : "Post to Community · +10 pts"}
               variant="secondary"
               disabled={published(open.id)}
               onPress={() => actions.publish({ ...open, sourceId: open.id })}
