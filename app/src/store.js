@@ -43,7 +43,7 @@ const SAMPLE_PROFILE = {
   purchases: SAMPLE_PURCHASES,
   orders: SAMPLE_ORDERS,
   friends: ["@maya.styles"],
-  points: 240,
+  points: 640,
 };
 
 export function AppProvider({ children }) {
@@ -86,7 +86,7 @@ export function AppProvider({ children }) {
     addRecent: (items) =>
       set((s) => {
         const ids = new Set(items.map((i) => i.matchId || i.name));
-        return { recent: [...items.map((i) => ({ ...i, seenAt: Date.now() })), ...s.recent.filter((r) => !ids.has(r.matchId || r.name))].slice(0, 12), points: s.points + 5 };
+        return { recent: [...items.map((i) => ({ ...i, seenAt: Date.now() })), ...s.recent.filter((r) => !ids.has(r.matchId || r.name))].slice(0, 12), points: s.points + 2 };
       }),
     removeFromCloset: (uid) =>
       set((s) => {
@@ -165,9 +165,9 @@ export function AppProvider({ children }) {
     publish: (o) => {
       set((s) => ({
         community: [{ id: `c${Date.now()}`, creator: "@you", name: o.name, likes: 0, items: o.items, layerOrder: o.layerOrder, mine: true, sourceId: o.sourceId }, ...s.community],
-        points: s.points + 25,
+        points: s.points + 10,
       }));
-      notify("Posted to Community · +25 points");
+      notify("Posted to Community · +10 points");
     },
     react: (postId, value) => set((s) => ({ liked: { ...s.liked, [postId]: s.liked[postId] === value ? 0 : value } })),
     toggleFriend: (handle) => {

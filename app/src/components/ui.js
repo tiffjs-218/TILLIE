@@ -1,7 +1,7 @@
 // Shared UI in Tillie's style (from the Figma Make file): black buttons with a yellow
 // underline shadow, outline pills, silver-blue panels, DM Sans + Playfair italic accents.
 import { useEffect, useRef } from "react";
-import { Animated, Modal, Pressable, StyleSheet, Text, View } from "react-native";
+import { Animated, Image, Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import { TOP_INSET, colors, fonts } from "../theme";
 import { useApp } from "../store";
 import Icon from "./Icon";
@@ -106,7 +106,7 @@ export function RetroWindow({ title, children, style, bar = "pink", bodyStyle })
 export function Wordmark({ size = 26 }) {
   return (
     <View style={{ flexDirection: "row", alignItems: "flex-end" }}>
-      <Text style={{ fontFamily: fonts.script, fontSize: size * 1.5, color: colors.pink, marginRight: -size * 0.12 }}>T</Text>
+      <Text style={{ fontFamily: fonts.pixel, fontSize: size * 1.55, color: colors.pink, marginRight: 1 }}>T</Text>
       <Text style={{ fontFamily: fonts.pixel, fontSize: size * 1.15, color: colors.pink, marginBottom: size * 0.05 }}>illie</Text>
       <Sparkle size={size * 0.5} color={colors.ink} style={{ marginLeft: 3, marginBottom: size * 0.7 }} />
     </View>
@@ -116,9 +116,7 @@ export function Wordmark({ size = 26 }) {
 // The round yellow "T" logo, slightly translucent
 export function TillieOrb({ size = 52, onPress, label = "Open Tillie" }) {
   const body = (
-    <View style={[s.orb, { width: size, height: size, borderRadius: size / 2 }]}>
-      <Text style={[s.orbT, { fontSize: size * 0.48 }]}>T</Text>
-    </View>
+    <Image source={require("../../assets/logo.png")} style={{ width: size, height: size, borderRadius: size / 2 }} accessibilityLabel="Tillie logo" />
   );
   if (!onPress) return body;
   return <Pressable onPress={onPress} accessibilityRole="button" accessibilityLabel={label} hitSlop={6}>{body}</Pressable>;
@@ -226,7 +224,7 @@ const s = StyleSheet.create({
   title: { fontFamily: fonts.pixel, color: colors.ink },
   titleEm: { fontFamily: fonts.script, color: colors.pink },
   orb: { backgroundColor: colors.yellowSoft, borderWidth: 3, borderColor: "rgba(255,255,255,0.85)", alignItems: "center", justifyContent: "center", shadowColor: "#111318", shadowOpacity: 0.28, shadowRadius: 10, shadowOffset: { width: 0, height: 5 }, elevation: 6 },
-  orbT: { fontFamily: fonts.script, color: colors.pink, marginTop: 2 },
+  orbT: { fontFamily: fonts.pixel, color: colors.pink, marginTop: 2 },
   backdrop: { flex: 1, backgroundColor: "rgba(37,35,41,0.5)" },
   sheet: { backgroundColor: colors.bg, borderTopWidth: 2, borderColor: colors.soft2, borderTopLeftRadius: 30, borderTopRightRadius: 30, paddingHorizontal: 20, paddingBottom: 28 },
   grabber: { alignSelf: "center", width: 40, height: 4, borderRadius: 4, backgroundColor: "#D3C8CB", marginTop: 10, marginBottom: 4 },

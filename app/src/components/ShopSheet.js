@@ -8,6 +8,15 @@ import { useApp } from "../store";
 import { categoryLabel, colors, makePiece, money, shopUrl, fonts } from "../theme";
 import { Button, Checkbox, Chip, ColorDot, Pill, Sheet, screen } from "./ui";
 import GarmentThumb from "./GarmentThumb";
+import products from "../data/products.json";
+
+// best product for a detected item: its exact match, or the closest color in that category
+function productFor(item) {
+  if (item.matchId) { const m = products.find((p) => p.id === item.matchId); if (m) return m; }
+  const rgb = (h) => [1, 3, 5].map((i) => parseInt(String(h).slice(i, i + 2), 16) || 0);
+  const d = (a, b) => { const x = rgb(a); const y = rgb(b); return Math.hypot(x[0] - y[0], x[1] - y[1], x[2] - y[2]); };
+  return products.filter((p) => p.category === item.category).sort((a, b) => Math.min(...a.colors.map((c) => d(c, item.color))) - Math.min(...b.colors.map((c) => d(c, item.color))))[0];
+}
 
 const BUDGETS = [
   { key: "any", label: "Any price", max: Infinity },
@@ -75,6 +84,16 @@ export default function ShopSheet({ visible, job, onClose, onOpenStudio }) {
 }
 
 function SelectStep({ job, checked, onToggle, onNext }) {
+  const { state, actions } = useApp();
+  const saveAll = () => {
+    (job?.items || []).filter((it) => checked.includes(it.id)).forEach((it) => {
+      const p = productFor(it);
+      if (!p) return;
+      const ci = Math.max(0, p.colors.findIndex((c) => c.toLowerCase() === String(it.color).toLowerCase()));
+      const size = recommendSize(p, state.purchases, state.profile)?.size || p.sizes[0];
+      actions.addToCloset(makePiece(p, ci, size));
+    });
+  };
   if (!job || job.status === "loading") {
     return (
       <View style={st.center}>
@@ -125,7 +144,8 @@ function SelectStep({ job, checked, onToggle, onNext }) {
           );
         }}
       />
-      <Button title={checked.length ? `Compare ${checked.length} piece${checked.length > 1 ? "s" : ""}` : "Select a piece"} disabled={!checked.length} onPress={onNext} />
+      <Button title={checked.length ? `Save ${checked.length} to closet + studio` : "Select a piece"} disabled={!checked.length} onPress={saveAll} />
+      <Button title="Compare prices first" variant="outline" disabled={!checked.length} onPress={onNext} style={{ marginTop: 8 }} />
     </View>
   );
 }
@@ -220,8 +240,7 @@ function CompareStep({ item, isLast, onBack, onOpen, onNext, onDone }) {
                 </View>
               </View>
               <View style={{ flexDirection: "row", gap: 8 }}>
-                <Button title={saved(p) ? "In closet ✓" : "Save to closet"} variant="outline" small style={{ flex: 1 }} disabled={saved(p)} onPress={() => actions.addToCloset(pieceFor(p))} />
-                <Button title="Try on" variant="soft" small style={{ flex: 1 }} onPress={() => actions.addToStudio(pieceFor(p))} />
+                <Button title={saved(p) ? "In closet + studio ✓" : "Save to closet"} variant="outline" small style={{ flex: 1 }} disabled={saved(p)} onPress={() => actions.addToCloset(pieceFor(p))} />
               </View>
             </Pressable>
           )}
@@ -298,7 +317,6 @@ function DetailStep({ product: p, onBack }) {
         </View>
       </View>
 
-      <Button title="Try on in studio" onPress={() => actions.addToStudio(piece)} />
       <View style={{ flexDirection: "row", gap: 10 }}>
         <Button title={inCloset ? "In closet ✓" : "Save to closet"} variant="outline" style={{ flex: 1 }} disabled={inCloset} onPress={() => actions.addToCloset(piece)} />
         <Button title="Add to bag" variant="outline" style={{ flex: 1 }} onPress={() => actions.addToBag([piece])} />

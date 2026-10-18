@@ -147,7 +147,7 @@ function BagList({ selected, subtotal, onCheckout }) {
 
 // ---------------- Orders + tracking ----------------
 function Orders({ orders }) {
-  const [open, setOpen] = useState(orders[0]?.id);
+  const [open, setOpen] = useState(null);
   if (!orders.length) return <Text style={screen.muted}>No orders yet. Everything you buy through Tillie shows up here with live tracking.</Text>;
   return (
     <ScrollView contentContainerStyle={{ gap: 12, paddingBottom: 16 }}>
@@ -157,17 +157,20 @@ function Orders({ orders }) {
         return (
           <View key={o.id} style={st.orderCard}>
             <Pressable onPress={() => setOpen(expanded ? null : o.id)} style={st.orderHead} accessibilityRole="button">
-              <View style={{ flex: 1 }}>
-                <Text style={st.orderId}>{o.id}</Text>
-                <Text style={st.meta}>{new Date(o.at).toLocaleDateString(undefined, { month: "short", day: "numeric" })} · {o.items.length} item{o.items.length > 1 ? "s" : ""} · {money(o.total)}</Text>
-              </View>
+              <Text style={[st.orderId, { flex: 1 }]}>Order {o.id}</Text>
               <View style={[st.statusPill, allDelivered && st.statusDone]}>
                 <Text style={[st.statusText, allDelivered && { color: "#FFFFFF" }]}>{allDelivered ? "Delivered" : "On the way"}</Text>
               </View>
+              <Text style={{ fontSize: 18, color: colors.ink, marginLeft: 8, transform: [{ rotate: expanded ? "90deg" : "0deg" }] }}>›</Text>
             </Pressable>
-            <View style={{ flexDirection: "row", gap: 6 }}>
-              {o.items.slice(0, 5).map((b) => <GarmentThumb key={b.uid} category={b.category} name={b.name} color={b.color} size={40} background={colors.soft} />)}
-            </View>
+            {expanded && (
+              <View style={{ gap: 8 }}>
+                <Text style={st.meta}>{new Date(o.at).toLocaleDateString(undefined, { month: "short", day: "numeric" })} · {o.items.length} item{o.items.length > 1 ? "s" : ""} · {money(o.total)}</Text>
+                <View style={{ flexDirection: "row", gap: 6 }}>
+                  {o.items.slice(0, 5).map((b) => <GarmentThumb key={b.uid} category={b.category} name={b.name} color={b.color} size={40} background={colors.soft} />)}
+                </View>
+              </View>
+            )}
             {expanded &&
               o.groups.map((g, i) => {
                 const stage = stageOf(o, g);

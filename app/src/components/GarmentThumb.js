@@ -1,9 +1,18 @@
 // Draws a little clothing illustration (shirt, jeans, sneaker, bag...) in the item's color.
 // Used everywhere a product appears so the demo looks like real listings, not color squares.
-import { View, StyleSheet } from "react-native";
+import { Image, View, StyleSheet } from "react-native";
+import { PHOTOS } from "../data/photos";
 import { colors } from "../theme";
 
 export default function GarmentThumb({ category, name = "", color = "#ccc", size = 56, background = colors.bg, radius }) {
+  const photo = PHOTOS[name];
+  if (photo && String(color).toLowerCase() === photo.color) {
+    return (
+      <View style={{ width: size, height: size, borderRadius: radius ?? size * 0.22, backgroundColor: "#FFFFFF", overflow: "hidden", borderWidth: 1, borderColor: colors.line }}>
+        <Image source={photo.src} style={{ width: "100%", height: "100%" }} resizeMode="cover" accessibilityLabel={name} />
+      </View>
+    );
+  }
   const n = name.toLowerCase();
   const s = size / 100; // draw on a 100×100 grid, then scale
   return (

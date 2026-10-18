@@ -78,7 +78,7 @@ export default function SavedScreen({ onBag, onOpenStudio }) {
             <Button title={`Checkout whole outfit · ${money(outfitTotal(open.items))}`} onPress={() => { actions.addToBag(outfitPieces(open.items)); close(); setTimeout(onBag, 450); }} />
             <Button title="Open in Studio" variant="lavender" onPress={() => { actions.loadOutfit(open); close(); onOpenStudio(); }} />
             <Button
-              title={published(open.id) ? "Posted to Community" : "Post to Community · +25 pts"}
+              title={published(open.id) ? "Posted to Community" : "Post to Community · +10 pts"}
               variant="secondary"
               disabled={published(open.id)}
               onPress={() => actions.publish({ ...open, sourceId: open.id })}

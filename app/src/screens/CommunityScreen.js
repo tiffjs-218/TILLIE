@@ -32,7 +32,7 @@ export default function CommunityScreen({ onBag, onOpenStudio }) {
           <View style={st.points}>
             <View style={{ flex: 1 }}>
               <Text style={st.pointsNum}>{state.points} pts ✦</Text>
-              <Text style={st.pointsText}>Post outfits (+25) and shop (+1 per $1). Spend points as discounts at Zara, Aritzia, Uniqlo and more. See Profile → Rewards.</Text>
+              <Text style={st.pointsText}>Post outfits (+10) and shop (+1 per $1). Spend points as discounts at Zara, Aritzia, Uniqlo and more. See Profile → Rewards.</Text>
             </View>
           </View>
           <Text style={screen.sample}>Prototype: sample rewards. Creator commission is a concept.</Text>
