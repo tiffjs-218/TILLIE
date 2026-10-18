@@ -1,0 +1,907 @@
+[
+ {
+  "id": "p01",
+  "name": "Relaxed Linen Button-Up Shirt",
+  "retailer": "Uniqlo",
+  "price": 29.9,
+  "category": "top",
+  "colors": [
+   "#F4F1EA",
+   "#BFD3E6",
+   "#E8C9C1"
+  ],
+  "colorNames": [
+   "Off White",
+   "Light Blue",
+   "Pink"
+  ],
+  "sizes": [
+   "XS",
+   "S",
+   "M",
+   "L",
+   "XL"
+  ],
+  "details": "100% linen \u00b7 relaxed fit"
+ },
+ {
+  "id": "p02",
+  "name": "Cable-Knit Crewneck Sweater",
+  "retailer": "Aritzia",
+  "price": 78.0,
+  "category": "top",
+  "colors": [
+   "#E9DFCC",
+   "#8C6A4F"
+  ],
+  "colorNames": [
+   "Cream",
+   "Mocha"
+  ],
+  "sizes": [
+   "XS",
+   "S",
+   "M",
+   "L"
+  ],
+  "details": "Merino wool blend \u00b7 oversized"
+ },
+ {
+  "id": "p03",
+  "name": "Fitted Ribbed Baby Tee",
+  "retailer": "Edikted",
+  "price": 18.0,
+  "category": "top",
+  "colors": [
+   "#1E1E1E",
+   "#FFFFFF",
+   "#D92D7D"
+  ],
+  "colorNames": [
+   "Black",
+   "White",
+   "Raspberry"
+  ],
+  "sizes": [
+   "XS",
+   "S",
+   "M",
+   "L"
+  ],
+  "details": "Cotton-spandex rib \u00b7 cropped"
+ },
+ {
+  "id": "p04",
+  "name": "Cropped Pointelle Cardigan",
+  "retailer": "Cider",
+  "price": 27.5,
+  "category": "top",
+  "colors": [
+   "#F2A7C3",
+   "#C9B8E8"
+  ],
+  "colorNames": [
+   "Baby Pink",
+   "Lilac"
+  ],
+  "sizes": [
+   "XS",
+   "S",
+   "M",
+   "L"
+  ],
+  "details": "Soft knit \u00b7 pearl buttons"
+ },
+ {
+  "id": "p05",
+  "name": "Striped Long Sleeve Tee",
+  "retailer": "H&M",
+  "price": 17.99,
+  "category": "top",
+  "colors": [
+   "#2B3A67",
+   "#B03A2E"
+  ],
+  "colorNames": [
+   "Navy Stripe",
+   "Red Stripe"
+  ],
+  "sizes": [
+   "XS",
+   "S",
+   "M",
+   "L",
+   "XL"
+  ],
+  "details": "Cotton jersey \u00b7 regular fit"
+ },
+ {
+  "id": "p06",
+  "name": "90s Straight Leg Jeans",
+  "retailer": "Amazon",
+  "price": 34.99,
+  "category": "bottom",
+  "colors": [
+   "#9DB4D3",
+   "#3E5578"
+  ],
+  "colorNames": [
+   "Light Wash",
+   "Dark Wash"
+  ],
+  "sizes": [
+   "24",
+   "25",
+   "26",
+   "27",
+   "28",
+   "30"
+  ],
+  "details": "Rigid denim \u00b7 high rise"
+ },
+ {
+  "id": "p07",
+  "name": "Pleated Wide-Leg Trousers",
+  "retailer": "Zara",
+  "price": 49.9,
+  "category": "bottom",
+  "colors": [
+   "#222222",
+   "#C8B8A0"
+  ],
+  "colorNames": [
+   "Black",
+   "Stone"
+  ],
+  "sizes": [
+   "XS",
+   "S",
+   "M",
+   "L"
+  ],
+  "details": "Flowy \u00b7 high waist"
+ },
+ {
+  "id": "p08",
+  "name": "Pleated Tennis Mini Skirt",
+  "retailer": "Edikted",
+  "price": 29.0,
+  "category": "bottom",
+  "colors": [
+   "#C2B280",
+   "#5B4636",
+   "#2B2B2B"
+  ],
+  "colorNames": [
+   "Khaki",
+   "Brown",
+   "Black"
+  ],
+  "sizes": [
+   "XS",
+   "S",
+   "M",
+   "L"
+  ],
+  "details": "Built-in shorts"
+ },
+ {
+  "id": "p09",
+  "name": "Low-Rise Fleece Sweatpants",
+  "retailer": "Cider",
+  "price": 22.0,
+  "category": "bottom",
+  "colors": [
+   "#9A9A9E",
+   "#7C8A6E"
+  ],
+  "colorNames": [
+   "Heather Grey",
+   "Sage"
+  ],
+  "sizes": [
+   "XS",
+   "S",
+   "M",
+   "L",
+   "XL"
+  ],
+  "details": "Brushed fleece \u00b7 drawstring"
+ },
+ {
+  "id": "p10",
+  "name": "Denim Maxi Skirt",
+  "retailer": "Urban Outfitters",
+  "price": 59.0,
+  "category": "bottom",
+  "colors": [
+   "#33415C"
+  ],
+  "colorNames": [
+   "Indigo"
+  ],
+  "sizes": [
+   "XS",
+   "S",
+   "M",
+   "L"
+  ],
+  "details": "Front slit \u00b7 mid rise"
+ },
+ {
+  "id": "p11",
+  "name": "Classic Leather Court Sneakers",
+  "retailer": "Amazon",
+  "price": 49.99,
+  "category": "shoes",
+  "colors": [
+   "#FAFAFA",
+   "#1A1A1A"
+  ],
+  "colorNames": [
+   "White",
+   "Black"
+  ],
+  "sizes": [
+   "6",
+   "7",
+   "8",
+   "9",
+   "10"
+  ],
+  "details": "Faux leather \u00b7 cushioned insole"
+ },
+ {
+  "id": "p12",
+  "name": "Knee-High Riding Boots",
+  "retailer": "Zara",
+  "price": 89.9,
+  "category": "shoes",
+  "colors": [
+   "#151515",
+   "#6B4226"
+  ],
+  "colorNames": [
+   "Black",
+   "Cognac"
+  ],
+  "sizes": [
+   "6",
+   "7",
+   "8",
+   "9"
+  ],
+  "details": "Block heel \u00b7 side zip"
+ },
+ {
+  "id": "p13",
+  "name": "Suede Penny Loafers",
+  "retailer": "Cider",
+  "price": 38.0,
+  "category": "shoes",
+  "colors": [
+   "#7B4B2A",
+   "#1E1E1E"
+  ],
+  "colorNames": [
+   "Brown",
+   "Black"
+  ],
+  "sizes": [
+   "6",
+   "7",
+   "8",
+   "9",
+   "10"
+  ],
+  "details": "Faux suede \u00b7 chunky sole"
+ },
+ {
+  "id": "p14",
+  "name": "Square-Toe Ballet Flats",
+  "retailer": "Princess Polly",
+  "price": 45.0,
+  "category": "shoes",
+  "colors": [
+   "#B3202A",
+   "#E8D6C5"
+  ],
+  "colorNames": [
+   "Cherry",
+   "Nude"
+  ],
+  "sizes": [
+   "6",
+   "7",
+   "8",
+   "9"
+  ],
+  "details": "Mary Jane strap"
+ },
+ {
+  "id": "p15",
+  "name": "Chunky Gold Hoop Earrings",
+  "retailer": "Amazon",
+  "price": 12.99,
+  "category": "accessory",
+  "colors": [
+   "#D4AF37",
+   "#C0C0C0"
+  ],
+  "colorNames": [
+   "Gold",
+   "Silver"
+  ],
+  "sizes": [
+   "One size"
+  ],
+  "details": "14k gold plated \u00b7 hypoallergenic"
+ },
+ {
+  "id": "p16",
+  "name": "Mini Shoulder Bag",
+  "retailer": "Zara",
+  "price": 35.9,
+  "category": "accessory",
+  "colors": [
+   "#1A1A1A",
+   "#D92D7D"
+  ],
+  "colorNames": [
+   "Black",
+   "Raspberry"
+  ],
+  "sizes": [
+   "One size"
+  ],
+  "details": "Faux leather \u00b7 zip top"
+ },
+ {
+  "id": "p17",
+  "name": "Woven Straw Tote Bag",
+  "retailer": "H&M",
+  "price": 29.99,
+  "category": "accessory",
+  "colors": [
+   "#C9A27E"
+  ],
+  "colorNames": [
+   "Natural"
+  ],
+  "sizes": [
+   "One size"
+  ],
+  "details": "Leather-look handles"
+ },
+ {
+  "id": "p18",
+  "name": "Dainty Chain Necklace",
+  "retailer": "Edikted",
+  "price": 16.0,
+  "category": "accessory",
+  "colors": [
+   "#C0C0C0",
+   "#D4AF37"
+  ],
+  "colorNames": [
+   "Silver",
+   "Gold"
+  ],
+  "sizes": [
+   "One size"
+  ],
+  "details": "Adjustable 16\u201318 in"
+ },
+ {
+  "id": "p19",
+  "name": "Cropped Denim Jacket",
+  "retailer": "Amazon",
+  "price": 42.99,
+  "category": "outerwear",
+  "colors": [
+   "#7D97BA",
+   "#2E2E33"
+  ],
+  "colorNames": [
+   "Mid Wash",
+   "Washed Black"
+  ],
+  "sizes": [
+   "XS",
+   "S",
+   "M",
+   "L"
+  ],
+  "details": "Boxy fit \u00b7 button front"
+ },
+ {
+  "id": "p20",
+  "name": "Oversized Wool-Blend Blazer",
+  "retailer": "Zara",
+  "price": 79.9,
+  "category": "outerwear",
+  "colors": [
+   "#3B3B3F",
+   "#D8C7AE"
+  ],
+  "colorNames": [
+   "Charcoal",
+   "Camel"
+  ],
+  "sizes": [
+   "XS",
+   "S",
+   "M",
+   "L"
+  ],
+  "details": "Single button \u00b7 padded shoulders"
+ },
+ {
+  "id": "p21",
+  "name": "Cropped Puffer Vest",
+  "retailer": "Uniqlo",
+  "price": 49.9,
+  "category": "outerwear",
+  "colors": [
+   "#1F2A2E",
+   "#EDE7DC"
+  ],
+  "colorNames": [
+   "Black",
+   "Ivory"
+  ],
+  "sizes": [
+   "S",
+   "M",
+   "L",
+   "XL"
+  ],
+  "details": "Water repellent \u00b7 lightweight"
+ },
+ {
+  "id": "p22",
+  "name": "Faux Leather Moto Jacket",
+  "retailer": "Cider",
+  "price": 54.0,
+  "category": "outerwear",
+  "colors": [
+   "#141414",
+   "#5A2E1E"
+  ],
+  "colorNames": [
+   "Black",
+   "Chocolate"
+  ],
+  "sizes": [
+   "XS",
+   "S",
+   "M",
+   "L"
+  ],
+  "details": "Asymmetric zip"
+ },
+ {
+  "id": "p23",
+  "name": "Chunky Knit Oversized Sweater",
+  "retailer": "H&M",
+  "price": 34.99,
+  "category": "top",
+  "colors": [
+   "#EADFC8",
+   "#A9B7A0"
+  ],
+  "colorNames": [
+   "Oatmeal",
+   "Sage"
+  ],
+  "sizes": [
+   "XS",
+   "S",
+   "M",
+   "L"
+  ],
+  "details": "Wool blend \u00b7 drop shoulder"
+ },
+ {
+  "id": "p24",
+  "name": "Cream Cable Knit Sweater",
+  "retailer": "Amazon",
+  "price": 32.99,
+  "category": "top",
+  "colors": [
+   "#ECE3D0",
+   "#C7A27A"
+  ],
+  "colorNames": [
+   "Ivory",
+   "Camel"
+  ],
+  "sizes": [
+   "S",
+   "M",
+   "L",
+   "XL"
+  ],
+  "details": "Acrylic blend \u00b7 crew neck"
+ },
+ {
+  "id": "p25",
+  "name": "Mid-Rise Straight Jeans",
+  "retailer": "Uniqlo",
+  "price": 49.9,
+  "category": "bottom",
+  "colors": [
+   "#A3B9D6",
+   "#2F3F5C"
+  ],
+  "colorNames": [
+   "Light Blue",
+   "Indigo"
+  ],
+  "sizes": [
+   "24",
+   "25",
+   "26",
+   "27",
+   "28",
+   "30"
+  ],
+  "details": "Stretch denim \u00b7 ankle length"
+ },
+ {
+  "id": "p26",
+  "name": "Baggy Light Wash Jeans",
+  "retailer": "Princess Polly",
+  "price": 65.0,
+  "category": "bottom",
+  "colors": [
+   "#B2C4DC"
+  ],
+  "colorNames": [
+   "Light Wash"
+  ],
+  "sizes": [
+   "XS",
+   "S",
+   "M",
+   "L"
+  ],
+  "details": "Relaxed leg \u00b7 low rise"
+ },
+ {
+  "id": "p27",
+  "name": "Retro Leather Sneakers",
+  "retailer": "Urban Outfitters",
+  "price": 64.0,
+  "category": "shoes",
+  "colors": [
+   "#F2F0EA",
+   "#2C3E50"
+  ],
+  "colorNames": [
+   "White",
+   "Navy"
+  ],
+  "sizes": [
+   "6",
+   "7",
+   "8",
+   "9",
+   "10"
+  ],
+  "details": "Gum sole \u00b7 lace up"
+ },
+ {
+  "id": "p28",
+  "name": "White Canvas Low-Tops",
+  "retailer": "H&M",
+  "price": 24.99,
+  "category": "shoes",
+  "colors": [
+   "#FBFBF9"
+  ],
+  "colorNames": [
+   "White"
+  ],
+  "sizes": [
+   "6",
+   "7",
+   "8",
+   "9",
+   "10"
+  ],
+  "details": "Cotton canvas \u00b7 rubber sole"
+ },
+ {
+  "id": "p29",
+  "name": "Thick Gold Hoop Earrings",
+  "retailer": "Princess Polly",
+  "price": 15.0,
+  "category": "accessory",
+  "colors": [
+   "#D9B54A"
+  ],
+  "colorNames": [
+   "Gold"
+  ],
+  "sizes": [
+   "One size"
+  ],
+  "details": "Lightweight hollow hoops"
+ },
+ {
+  "id": "p30",
+  "name": "Washed Denim Trucker Jacket",
+  "retailer": "H&M",
+  "price": 39.99,
+  "category": "outerwear",
+  "colors": [
+   "#88A2C4",
+   "#4A5D7A"
+  ],
+  "colorNames": [
+   "Light Denim",
+   "Dark Denim"
+  ],
+  "sizes": [
+   "XS",
+   "S",
+   "M",
+   "L"
+  ],
+  "details": "Classic fit \u00b7 chest pockets"
+ },
+ {
+  "id": "p31",
+  "name": "Oversized Denim Jacket",
+  "retailer": "Zara",
+  "price": 55.9,
+  "category": "outerwear",
+  "colors": [
+   "#7590B5"
+  ],
+  "colorNames": [
+   "Blue"
+  ],
+  "sizes": [
+   "XS",
+   "S",
+   "M",
+   "L"
+  ],
+  "details": "Dropped shoulder \u00b7 longline"
+ },
+ {
+  "id": "p32",
+  "name": "Black Leather Knee Boots",
+  "retailer": "Aritzia",
+  "price": 168.0,
+  "category": "shoes",
+  "colors": [
+   "#111111"
+  ],
+  "colorNames": [
+   "Black"
+  ],
+  "sizes": [
+   "6",
+   "7",
+   "8",
+   "9"
+  ],
+  "details": "Genuine leather \u00b7 almond toe"
+ },
+ {
+  "id": "p33",
+  "name": "V-Neck Wool-Blend Sweater",
+  "retailer": "Uniqlo",
+  "price": 39.9,
+  "category": "top",
+  "colors": [
+   "#CFC3B0",
+   "#8E8A86",
+   "#2E2E32"
+  ],
+  "colorNames": [
+   "Oatmeal",
+   "Grey",
+   "Black"
+  ],
+  "sizes": [
+   "XS",
+   "S",
+   "M",
+   "L",
+   "XL"
+  ],
+  "details": "Merino blend \u00b7 relaxed V-neck"
+ },
+ {
+  "id": "p34",
+  "name": "Fine Knit V-Neck Sweater",
+  "retailer": "Aritzia",
+  "price": 88.0,
+  "category": "top",
+  "colors": [
+   "#D5CBBA",
+   "#E9E3D8"
+  ],
+  "colorNames": [
+   "Heather Oat",
+   "Ivory"
+  ],
+  "sizes": [
+   "XS",
+   "S",
+   "M",
+   "L"
+  ],
+  "details": "Cashmere blend \u00b7 slightly cropped"
+ },
+ {
+  "id": "p35",
+  "name": "Soft V-Neck Pullover Sweater",
+  "retailer": "Amazon",
+  "price": 26.99,
+  "category": "top",
+  "colors": [
+   "#C9BCA6",
+   "#A47C5B"
+  ],
+  "colorNames": [
+   "Beige",
+   "Camel"
+  ],
+  "sizes": [
+   "S",
+   "M",
+   "L",
+   "XL"
+  ],
+  "details": "Lightweight knit \u00b7 loose fit"
+ },
+ {
+  "id": "p36",
+  "name": "Cream Wide-Leg Jeans",
+  "retailer": "Zara",
+  "price": 45.9,
+  "category": "bottom",
+  "colors": [
+   "#EFE8DA"
+  ],
+  "colorNames": [
+   "Ecru"
+  ],
+  "sizes": [
+   "24",
+   "25",
+   "26",
+   "27",
+   "28",
+   "30"
+  ],
+  "details": "High rise \u00b7 full length"
+ },
+ {
+  "id": "p37",
+  "name": "High-Rise Wide-Leg Trousers",
+  "retailer": "Uniqlo",
+  "price": 39.9,
+  "category": "bottom",
+  "colors": [
+   "#F1ECE2",
+   "#D8CBB3"
+  ],
+  "colorNames": [
+   "Off White",
+   "Beige"
+  ],
+  "sizes": [
+   "XS",
+   "S",
+   "M",
+   "L"
+  ],
+  "details": "Pleated front \u00b7 elastic back"
+ },
+ {
+  "id": "p38",
+  "name": "Baggy Ecru Jeans",
+  "retailer": "Princess Polly",
+  "price": 65.0,
+  "category": "bottom",
+  "colors": [
+   "#ECE4D3"
+  ],
+  "colorNames": [
+   "Ecru"
+  ],
+  "sizes": [
+   "XS",
+   "S",
+   "M",
+   "L"
+  ],
+  "details": "Relaxed wide leg \u00b7 mid rise"
+ },
+ {
+  "id": "p39",
+  "name": "Suede Clog Mules",
+  "retailer": "Amazon",
+  "price": 34.99,
+  "category": "shoes",
+  "colors": [
+   "#7A5234",
+   "#B79068"
+  ],
+  "colorNames": [
+   "Brown",
+   "Tan"
+  ],
+  "sizes": [
+   "6",
+   "7",
+   "8",
+   "9",
+   "10"
+  ],
+  "details": "Faux suede \u00b7 cork footbed"
+ },
+ {
+  "id": "p40",
+  "name": "Slouchy Suede Shoulder Bag",
+  "retailer": "Cider",
+  "price": 32.0,
+  "category": "accessory",
+  "colors": [
+   "#7D5F45",
+   "#B08A63"
+  ],
+  "colorNames": [
+   "Chocolate",
+   "Camel"
+  ],
+  "sizes": [
+   "One size"
+  ],
+  "details": "Faux suede \u00b7 magnetic closure"
+ },
+ {
+  "id": "p41",
+  "name": "Drawstring Bucket Bag",
+  "retailer": "Zara",
+  "price": 45.9,
+  "category": "accessory",
+  "colors": [
+   "#8A6A50",
+   "#1A1A1A"
+  ],
+  "colorNames": [
+   "Taupe",
+   "Black"
+  ],
+  "sizes": [
+   "One size"
+  ],
+  "details": "Soft leather-look \u00b7 shoulder strap"
+ },
+ {
+  "id": "p42",
+  "name": "Pearl Bow Pendant Necklace",
+  "retailer": "Edikted",
+  "price": 18.0,
+  "category": "accessory",
+  "colors": [
+   "#C9C9C9",
+   "#D4AF37"
+  ],
+  "colorNames": [
+   "Silver",
+   "Gold"
+  ],
+  "sizes": [
+   "One size"
+  ],
+  "details": "Freshwater pearl \u00b7 adjustable chain"
+ }
+]
